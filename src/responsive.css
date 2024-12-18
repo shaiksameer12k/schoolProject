@@ -1,0 +1,233 @@
+/* Mobile */
+@media (max-width: 576px) {
+  /* Styles for extra small devices */
+  #lg_menu {
+    display: none;
+  }
+  #header {
+    padding: 0px 10px !important;
+  }
+  #header_logo {
+    width: 120px;
+  }
+  #hero_section_title {
+    font-size: 32px !important;
+    line-height: 40px !important;
+  }
+  .shape-1 {
+    top: 34px;
+    width: 69% !important;
+  }
+  .shape-2 {
+    top: 240px !important;
+  }
+  #loginScreen {
+    /* background-position-y: -10px; */
+    align-items: end;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #loginFormContainer {
+    box-shadow: none;
+    background-color: transparent;
+    margin-bottom: 20px;
+  }
+  #loginForm {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+  .shape01,
+  .shape02,
+  .shape03 {
+    display: none;
+  }
+}
+
+/* Small devices */
+@media (min-width: 576px) and (max-width: 768px) {
+  /* Styles for small devices */
+  #lg_menu {
+    display: none;
+  }
+  #header {
+    padding: 0px 10px !important;
+  }
+  #header_logo {
+    width: 120px;
+  }
+  #hero_section_title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  #loginScreen {
+    /* background-position-y: -10px; */
+    align-items: center;
+  }
+  /* #loginFormContainer {
+    box-shadow: none;
+    background-color: transparent;
+    margin-bottom: 20px;
+  }
+  #loginForm {
+    box-shadow: none;
+    background-color: transparent;
+  } */
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+  .shape01,
+  .shape02,
+  .shape03 {
+    display: none;
+  }
+}
+
+/* Medium devices */
+@media (min-width: 768px) and (max-width: 992px) {
+  /* Styles for medium devices */
+  #lg_menu {
+    display: none;
+  }
+  #header_logo {
+    width: 120px;
+  }
+  #loginScreen {
+    /* background-position-y: -10px; */
+    align-items: center;
+  }
+
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+
+  .shape01,
+  .shape02,
+  .shape03 {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------------- */
+
+/* Large devices */
+@media (min-width: 992px) and (max-width: 1200px) {
+  /* Styles for large devices */
+  #sm_menu {
+    display: none;
+  }
+  #header {
+    height: 200px;
+  }
+  #header_logo {
+    width: 120px;
+  }
+  #loginScreen {
+    background-image: none;
+  }
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+}
+
+/* Extra large devices  my laptop*/
+@media (min-width: 1200px) {
+  /* Styles for extra large devices */
+  #sm_menu {
+    display: none;
+  }
+  #header {
+    height: 400px;
+  }
+  #header_logo {
+    width: 150px;
+  }
+  #loginScreen {
+    background-image: none;
+  }
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+}
+
+/* XXL devices */
+@media (min-width: 1600px) {
+  /* Styles for XXL devices */
+  #sm_menu {
+    display: none;
+  }
+  #header {
+    height: 30%;
+  }
+  #header_logo {
+    width: 200px;
+  }
+  #loginScreen {
+    background-image: none;
+  }
+  #inputField {
+    border: none;
+    border-bottom: 1px solid #ff8383 !important;
+    border-radius: 0px !important;
+    background: transparent !important;
+  }
+  #inputField,
+  #inputField,
+  :focus,
+  #inputField,
+  :focus {
+    box-shadow: none !important;
+  }
+}

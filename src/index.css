@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  /* overflow-x: hidden; */
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px; /* Base font size */
+}
+
+h1 {
+  font-size: 2rem; /* 2 times the root font size */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ul li span {
+  color: #000000;
+}
+.overflow-hidden {
+  height: 100%;
+}
+
+/* icon css */
+.icon-hover {
+  transition: color 0.3s;
+}
+
+.icon-hover:hover {
+  color: #ffcc00;
+}
+
+/* menu drawer */
+
+.ant-drawer-content-wrapper {
+  width: 100% !important;
+}
+
+.ant-drawer-body {
+  padding: 0px 0px 15px 0px !important;
+}
+.ant-menu-submenu-title {
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+/* styles.css */
+
+.ant-drawer-footer {
+  border-top: 1px solid rgb(210, 210, 210) !important;
+}
+.ant-drawer-header {
+  border-bottom: 1px solid rgb(210, 210, 210) !important;
+}
+.ant-drawer-close,
+.ant-drawer-header-title {
+  color: #ffffff !important;
+}
+
+.ant-menu-item {
+  color: #ffffff !important;
+  gap: 10px !important;
+  font-weight: 600 !important;
+}
+.ant-menu-item > span {
+  color: #ffffff !important;
+}
+.ant-menu-item-selected > span {
+  color: #2c1944 !important;
+}
+
+.ant-menu-item:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ) !important; /* Light hover effect */
+}
+
+.ant-menu-item-selected {
+  background-color: #ffffff !important; /* Background color for selected item */
+  color: #2c1944 !important; /* Text color for selected item */
+}
+
+.ant-menu-item-selected .anticon {
+  color: #2c1944 !important; /* Icon color for selected item */
+}
+
+/* header menu css */
+.menu-item {
+  font-weight: 600;
+  position: relative;
+}
+.active-menu-item {
+  color: #44226d;
+  transition: all 0.3s ease-in-out;
+}
+
+.active-menu-item::after,
+.menu-item::after {
+  content: "";
+  background-color: #44226d;
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: right left;
+  transition: transform 0.25s ease-out;
+}
+.active-menu-item:after {
+  transform: scaleX(1);
+  transform-origin: left right;
+}
+.active-menu-item:hover::after,
+.menu-item:hover::after {
+  transform: scaleX(1);
+  transform-origin: left right;
+}
+
+/* tooltip */
+
+.ant-tooltip-inner {
+  min-height: 10px !important;
+  font-size: 13px !important;
+  padding: 4px 8px !important;
+}
+
+/* flotable buttn */
+.ant-float-btn-body {
+  background: #ff1f59 !important;
+}
+
+/* ant input filed css */
+/* .ant-input-group-wrapper {
+  height: 40px;
+} */
+.ant-input-wrapper {
+  height: 100%;
+}
+
+.custom-search .ant-input {
+  height: 100%;
+  font-size: 13px;
+}
+
+.custom-search .ant-btn {
+  font-size: 12px;
+}
+
+/* spinner / Loader */
+.ant-spin-text {
+  margin-top: 20px !important;
+}
+.draggable-item {
+  touch-action: none; /* Allow the drag event to work */
+  user-select: none; /* Prevent text selection during dragging */
+  cursor: grab; /* Make it clear that it's a draggable item */
+}
+
+/* mandatory start */
+.mandatory {
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  margin: 0px 2px;
+}
+
+/* antedesign table */
+
+.ant-table-row:nth-child(odd) {
+  background-color: #f7f6fe;
+}
+
+/* select */
+:where(.css-dev-only-do-not-override-1x0dypw).ant-select-outlined:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border: 1px solid #9e9e9e !important;
+  color: #9e9e9e !important;
+}
+
+/* login screen */
+
+#loginScreen {
+  background: url(./assets/loginVector.svg);
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+#loginFormContainer {
+  position: relative;
+  z-index: 2;
+}
+.shape01 {
+  background: url(./assets/PolygonV2.svg);
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  height: 370px;
+  width: 400px;
+  position: absolute;
+  right: 0px;
+}
+.shape02 {
+  background: url(./assets/PolygonV3.svg);
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  height: 370px;
+  width: 400px;
+  position: absolute;
+  left: -200px;
+  top: 150px;
+  z-index: -1;
+}
+.shape03 {
+  background: url(./assets/EllipseV2.svg);
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  left: -50px;
+  top: -50px;
+}
+
+#inputField {
+  padding: 10px 0px;
+}
+.ant-form-item-label {
+  padding: 0px !important;
+}
+/* 
+.ant-form-item-additional{
+  display: none !important;
+} */
