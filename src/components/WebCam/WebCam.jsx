@@ -169,4 +169,3 @@ const WebcamComponent = () => {
 };
 
 export default WebcamComponent;
-

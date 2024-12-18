@@ -27,15 +27,25 @@ const Dashboard = () => {
   console.log("dataWithPercentage", dataWithPercentage);
   return (
     <div className=" bg-customlightGrayBgColor">
-      {/* <WebcamComponent />
-      <ButtonComponent name="openCamera" />
-      <CameraComponent /> */}
+      <WebcamComponent />
 
       <Row gutter={[16, 8]}>
-        <Col sm={12} md={12} lg={6} style={{ height: "200px" }} className="shadow-sm">
+        <Col
+          sm={12}
+          md={12}
+          lg={6}
+          style={{ height: "200px" }}
+          className="shadow-sm"
+        >
           <DemoBar data={data01} type="Pie" />
         </Col>
-        <Col sm={12} md={12} lg={6} style={{ height: "200px" }} className="shadow-sm">
+        <Col
+          sm={12}
+          md={12}
+          lg={6}
+          style={{ height: "200px" }}
+          className="shadow-sm"
+        >
           <DemoBar data={data02} type="Pie" />
         </Col>
       </Row>
