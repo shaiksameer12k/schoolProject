@@ -7,11 +7,13 @@ export default {
         iconLightGray: "#a3abb8",
         iconHoverColor: "#ff1f59",
         linkColor: "#1ca0dc",
-        primaryTextColor:"#ff8383"
+        primaryTextColor: "#ff8383",
       },
+
       backgroundColor: {
         customDarkBgColor: "#2c1944",
         customActiveBgColor: "#ececec",
+        customlightGrayBgColor: "#d3d3d330",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"], // Default sans-serif font

@@ -9,6 +9,7 @@ import StudentRegisterForm from "./components/Main/pages/StudentRegisterForm";
 import Dashboard from "./components/Main/DashboardComponents/Dashboard";
 import Studentslist from "./components/Main/pages/Studentslist";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import UserStartAssessment from "./components/Main/pages/UserStartAssessment";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="studentsList" element={<Studentslist />} />
         <Route path="userMaster" element={<StudentRegisterForm />} />
+        <Route path="userLogin" element={<UserStartAssessment />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

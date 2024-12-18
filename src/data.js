@@ -5,6 +5,7 @@ export const menuData = [
   // { menu_id: 4, menu_name: "Degree", menu_path: "/Degree" },
   { menu_id: 2, menu_name: "Students List", menu_path: "/layout/studentsList" },
   { menu_id: 3, menu_name: "User Master", menu_path: "/layout/userMaster" },
+  { menu_id: 4, menu_name: "User Login", menu_path: "/layout/userLogin" },
 ];
 
 export const items = [
@@ -35,6 +36,13 @@ export const items = [
     label: "User Master",
     path: "/layout/userMaster",
     icon: "BsShop",
+    isVisible: true,
+  },
+  {
+    key: "5",
+    label: "User Login",
+    path: "/layout/userLogin",
+    icon: "FaUser",
     isVisible: true,
   },
 ];

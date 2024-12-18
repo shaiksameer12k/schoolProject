@@ -227,7 +227,6 @@ const InputField = ({
       case "select":
         return (
           <>
-            {/* hell */}
             <Select
               mode={mode}
               placeholder={placeholder ? placeholder : `Select a ${label}`}
@@ -240,6 +239,8 @@ const InputField = ({
               name={name}
               allowClear
               disabled={idDisabled}
+              size={size}
+              style={{ width: "100%" }}
             />
           </>
         );
@@ -266,7 +267,7 @@ const InputField = ({
             suffix={suffix}
             id={id}
             variant={variant}
-            size="large"
+            size={size}
           />
         );
     }

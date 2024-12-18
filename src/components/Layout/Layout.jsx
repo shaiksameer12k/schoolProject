@@ -44,7 +44,10 @@ const Layout = () => {
   return (
     <div className="w-full" ref={containerRef}>
       <Header scrollY={scrollY} />
-      <div className="min-h-lvh  px-3 py-4 " style={{ background: "#FFFFFF" }}>
+      <div
+        className="min-h-lvh  px-3 py-2 "
+        style={{ background: "#FFFFFF", height: "100vh", maxHeight: "auto" }}
+      >
         <Outlet />
       </div>
       <Footer />

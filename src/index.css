@@ -262,3 +262,6 @@ ul li span {
 .ant-form-item-additional{
   display: none !important;
 } */
+ .ant-picker{
+  width: 100% !important;
+ }

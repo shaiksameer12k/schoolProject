@@ -126,8 +126,12 @@
 
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import ButtonComponent from "../../reusable/Button/ButtonComponent";
+import DynamicIcon from "../../reusable/IconComponent/IconComponent";
+import { CameraOutlined, RotateLeftOutlined } from "@ant-design/icons";
+import { Col, Row } from "antd";
 
-const WebcamComponent = () => {
+const WebcamComponent = ({ screen }) => {
   const webcamRef = useRef(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [isFrontCamera, setIsFrontCamera] = useState(true); // To toggle between front and back camera
@@ -150,28 +154,68 @@ const WebcamComponent = () => {
   };
 
   return (
-    <div className="camera-container">
-      <div className="camera-controls">
-        <button onClick={handleStartCamera}>Start Camera</button>
-        <button onClick={handleStopCamera}>Stop Camera</button>
-        <button onClick={captureScreenshot}>Capture</button>
-        <button onClick={toggleCamera}>
-          Switch to {isFrontCamera ? "Back" : "Front"} Camera
-        </button>
+    <div className="camera-container h-full">
+      <div className="h-3/4 border-2 text-center border-gray-200">
+        {isCameraOn ? (
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width="100%"
+            style={{ height: "100%" }}
+            videoConstraints={{
+              facingMode: isFrontCamera ? "user" : "environment", // Toggle between front and back camera
+            }}
+          />
+        ) : (
+          <CameraOutlined style={{ fontSize: screen?.xs ? 200 : 400 }} />
+        )}
       </div>
 
-      {isCameraOn && (
-        <Webcam
-          audio={false}
-          height={360}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width="100%"
-          videoConstraints={{
-            facingMode: isFrontCamera ? "user" : "environment", // Toggle between front and back camera
-          }}
-        />
-      )}
+      <Row gutter={16} className="h-1/4 my-2">
+        <Col xs={8} sm={24} md={12} lg={6}>
+          <ButtonComponent
+            onClick={handleStartCamera}
+            name="Start Camera"
+            type="primary"
+            size="medium"
+            btnStyle={{ width: "100%" }}
+          />
+        </Col>
+        <Col xs={8} sm={24} md={12} lg={6}>
+          <ButtonComponent
+            onClick={handleStopCamera}
+            name="Stop Camera"
+            type="primary"
+            size="medium"
+            btnStyle={{ width: "100%" }}
+          />
+        </Col>
+        <Col xs={8} sm={24} md={12} lg={6}>
+          <ButtonComponent
+            onClick={toggleCamera}
+            name={
+              screen?.xs ? (
+                <RotateLeftOutlined style={{ fontSize: "20px" }} />
+              ) : (
+                `Switch to ${isFrontCamera ? "Back" : "Front"} Camera`
+              )
+            }
+            type="primary"
+            size="medium"
+            btnStyle={{ width: "100%" }}
+          />
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={6}>
+          <ButtonComponent
+            onClick={captureScreenshot}
+            name="Capture"
+            type="primary"
+            size="medium"
+            btnStyle={{ width: "100%" }}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };
