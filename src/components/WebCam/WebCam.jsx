@@ -130,6 +130,7 @@ import Webcam from "react-webcam";
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [isFrontCamera, setIsFrontCamera] = useState(true); // To toggle between front and back camera
 
   const handleStartCamera = () => {
     setIsCameraOn(true);
@@ -144,12 +145,19 @@ const WebcamComponent = () => {
     console.log(imageSrc);
   };
 
+  const toggleCamera = () => {
+    setIsFrontCamera((prev) => !prev); // Toggle the camera mode
+  };
+
   return (
     <div className="camera-container">
       <div className="camera-controls">
         <button onClick={handleStartCamera}>Start Camera</button>
         <button onClick={handleStopCamera}>Stop Camera</button>
         <button onClick={captureScreenshot}>Capture</button>
+        <button onClick={toggleCamera}>
+          Switch to {isFrontCamera ? "Back" : "Front"} Camera
+        </button>
       </div>
 
       {isCameraOn && (
@@ -160,7 +168,7 @@ const WebcamComponent = () => {
           screenshotFormat="image/jpeg"
           width="100%"
           videoConstraints={{
-            facingMode: "environment", // For mobile camera access
+            facingMode: isFrontCamera ? "user" : "environment", // Toggle between front and back camera
           }}
         />
       )}
