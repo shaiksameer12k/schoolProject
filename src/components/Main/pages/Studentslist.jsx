@@ -5,6 +5,7 @@ import { catagoryFieldsData } from "../../../data/formData";
 import { Col, Grid, message, Row } from "antd";
 import ButtonComponent from "../../../reusable/Button/ButtonComponent";
 import { dataToExcelExport } from "../../../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 const sortFunciton = (a, b, field) => {
   const aValue = a[field];
@@ -58,6 +59,7 @@ const Studentslist = () => {
     { id: 2, student_name: "Sahil", science: 20, english: 60, hindi: 10 },
     { id: 3, student_name: "Ismail", science: 40, english: 20, hindi: 80 },
   ];
+  let navegate = useNavigate();
 
   useEffect(() => {
     let columns = orgColumns.map((item) => ({
@@ -85,7 +87,7 @@ const Studentslist = () => {
         if (item.dataIndex === "student_name") {
           return (
             <span
-              onClick={() => console.log("render*", record)} // You can access the entire record if needed
+              onClick={() => navegate(`/layout/studentsList/${record?.id}`)} // You can access the entire record if needed
               className="text-linkColor cursor-pointer"
             >
               {text}

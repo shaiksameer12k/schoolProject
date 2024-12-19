@@ -2,22 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Router from "../../Router.jsx";
+
 import { FloatButton } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent.jsx";
-import { Outlet } from "react-router-dom";
-import InputField from "../../reusable/InputField/InputField.jsx";
-import {
-  centrliseFieldsValidation,
-  centrliseFileFieldsValidation,
-} from "../../utils/feildValidation.js";
-import fieldsData from "../../data/formData.js";
-import FormLayout from "../../reusable/FormLayout/FormLayout.jsx";
-import { Content } from "antd/es/layout/layout.js";
+import { Outlet, useLocation } from "react-router-dom";
 
 const Layout = () => {
   const [scrollY, setScrollY] = useState(null);
-
+  let location = useLocation();
   useEffect(() => {
     const handleScroll = () => {
       let scrollY = window.scrollY;
@@ -41,13 +33,16 @@ const Layout = () => {
 
   let containerRef = useRef();
 
+  useEffect(() => {
+    scrollToTop();
+  }, [location]);
+
   return (
     <div className="w-full" ref={containerRef}>
       <Header scrollY={scrollY} />
       <div
-        className=" px-3 py-2 "
+        className=" px-3 py-2 bg-customlightGrayBgColor"
         style={{
-          background: "#FFFFFF",
           minHeight: "100vh",
           height: "auto",
           maxHeight: "auto",

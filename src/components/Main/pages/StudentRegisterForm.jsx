@@ -43,7 +43,7 @@ const StudentRegisterForm = () => {
 
   console.log("registerFormData$", registerFormData);
   return (
-    <div className="p-5 h-full bg-customlightGrayBgColor">
+    <div className="p-5 h-full ">
       <FormLayout fieldsData={registerFormData} buttonsArr={buttonsArr} />
     </div>
   );

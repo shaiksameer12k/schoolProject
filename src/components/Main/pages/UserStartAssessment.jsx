@@ -8,7 +8,7 @@ const UserStartAssessment = () => {
   let screen = Grid.useBreakpoint();
   console.log("screen", screen);
   return (
-    <div className="h-full bg-customlightGrayBgColor">
+    <div className="h-full ">
       <Row gutter={[8, 8]} className="h-full">
         {screen?.xs ? (
           <>

@@ -26,7 +26,7 @@ const Dashboard = () => {
   }));
   console.log("dataWithPercentage", dataWithPercentage);
   return (
-    <div className=" h-full bg-customlightGrayBgColor p-2">
+    <div className=" h-full p-2">
       <Row gutter={[8, 8]}>
         <Col
           sm={12}
