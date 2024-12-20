@@ -26,6 +26,20 @@ export default {
         raleway: ["Raleway", "sans-serif"], // Added Raleway
         lato: ["Lato", "sans-serif"], // Added Lato
       },
+      screens: {
+        // Custom breakpoints
+
+        sm: "640px", // Small devices (portrait phones)
+        md: "768px", // Medium devices (tablets)
+        lg: "1024px", // Large devices (laptops)
+        xl: "1280px", // Extra large devices (desktops)
+        "2xl": "1536px", // Very large devices (large desktops)
+
+        // You can also define custom breakpoints, for example:
+        xs: "0px", // Custom breakpoint for extra small devices
+        "lg-max": { max: "1024px" }, // You can also use `max` width to target devices less than 1024px
+      },
+
       zIndex: {
         "-1": "-1",
         1: "1",

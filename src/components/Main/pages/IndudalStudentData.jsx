@@ -11,62 +11,62 @@ const OMRAnswerSheet = () => {
   const questions = [
     {
       question: "What is the capital of France?",
-      options: ["A. Paris", "B. Berlin", "C. Madrid", "D. Rome"],
+      options: ["Paris", "Berlin", "Madrid", "Rome"],
     },
     {
       question: "Which programming language is used for web development?",
-      options: ["A. Python", "B. JavaScript", "C. Java", "D. C++"],
+      options: ["Python", "JavaScript", "Java", "C++"],
     },
     {
       question: "Who discovered gravity?",
       options: [
-        "A. Albert Einstein",
-        "B. Isaac Newton",
-        "C. Galileo",
-        "D. Nikola Tesla",
+        "Albert Einstein",
+        "Isaac Newton",
+        "Galileo",
+        "Nikola Tesla",
       ],
     },
     {
       question: "Which planet is known as the Red Planet?",
-      options: ["A. Venus", "B. Mars", "C. Earth", "D. Jupiter"],
+      options: ["Venus", "Mars", "Earth", "Jupiter"],
     },
     {
       question: "What is the largest ocean on Earth?",
       options: [
-        "A. Atlantic Ocean",
-        "B. Indian Ocean",
-        "C. Southern Ocean",
-        "D. Pacific Ocean",
+        "Atlantic Ocean",
+        "Indian Ocean",
+        "Southern Ocean",
+        "Pacific Ocean",
       ],
     },
     {
       question: "What is the square root of 64?",
-      options: ["A. 6", "B. 8", "C. 10", "D. 12"],
+      options: ["6", "8", "10", "12"],
     },
     {
       question: "Which element has the chemical symbol 'O'?",
-      options: ["A. Oxygen", "B. Osmium", "C. Ozone", "D. Oganesson"],
+      options: ["Oxygen", "Osmium", "Ozone", "Oganesson"],
     },
     {
       question: "Which country is known as the Land of the Rising Sun?",
-      options: ["A. China", "B. Japan", "C. South Korea", "D. Thailand"],
+      options: ["China", "Japan", "South Korea", "Thailand"],
     },
     {
       question: "Who is known as the father of modern physics?",
       options: [
-        "A. Albert Einstein",
-        "B. Isaac Newton",
-        "C. Niels Bohr",
-        "D. Richard Feynman",
+        "Albert Einstein",
+        "Isaac Newton",
+        "Niels Bohr",
+        "Richard Feynman",
       ],
     },
     {
       question: "Which is the tallest mountain in the world?",
       options: [
-        "A. Mount Kilimanjaro",
-        "B. Mount Everest",
-        "C. K2",
-        "D. Mount Fuji",
+        "Mount Kilimanjaro",
+        "Mount Everest",
+        "K2",
+        "Mount Fuji",
       ],
     },
   ];
@@ -90,7 +90,7 @@ const OMRAnswerSheet = () => {
                   />
                   <label
                     htmlFor={`question${index + 1}-option${optionIndex}`}
-                    className="text-lg"
+                    className="text-lg xs:text-sm my-1"
                   >
                     {option}
                   </label>
@@ -116,7 +116,7 @@ const IndudalStudentData = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-4xl p-8">
+      <div className="w-full max-w-4xl p-8 xs:p-0">
         {/* Profile Card */}
         <Card
           className="w-full max-w-4xl flex flex-row items-center rounded-lg"
