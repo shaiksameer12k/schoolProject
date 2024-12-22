@@ -22,6 +22,8 @@ import {
   FaRegStar,
   FaRegBookmark,
   FaPowerOff,
+  FaArrowRight,
+  FaBiohazard,
 } from "react-icons/fa";
 import {
   IoIosPeople,
@@ -109,9 +111,13 @@ import { FcDataConfiguration, FcIphone } from "react-icons/fc";
 import { FaHistory } from "react-icons/fa";
 import { MdOutlineNoteAlt, MdOutlineCancel } from "react-icons/md";
 import { LiaNotesMedicalSolid } from "react-icons/lia";
-import { RiCheckboxBlankLine, RiHomeOfficeFill } from "react-icons/ri";
+import {
+  RiCheckboxBlankLine,
+  RiHomeOfficeFill,
+  RiTestTubeFill,
+} from "react-icons/ri";
 import { LuBaby } from "react-icons/lu";
-import { PiExportBold, PiExportFill } from "react-icons/pi";
+import { PiExportBold, PiExportFill, PiMathOperationsBold } from "react-icons/pi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
 import { FiPhone } from "react-icons/fi";
@@ -227,7 +233,11 @@ const iconComponents = {
   BsShop,
   FaCheckCircle,
   FaRegStar,
-  FaRegBookmark,FaPowerOff
+  FaRegBookmark,
+  FaPowerOff,
+  RiTestTubeFill,
+  FaArrowRight,PiMathOperationsBold,
+  FaBiohazard
 };
 
 const DynamicIcon = ({
@@ -237,6 +247,7 @@ const DynamicIcon = ({
   onClickHandel,
   iconTooltipTitle = "",
   iconTooltipPlacement = "bottomRight",
+  className = "",
 }) => {
   const IconComponent = iconComponents[iconName];
 
@@ -255,7 +266,7 @@ const DynamicIcon = ({
         fontSize: `${size}px`,
       }}
     >
-     <CustomTooltip title={iconTooltipTitle} placement={iconTooltipPlacement}>
+      <CustomTooltip title={iconTooltipTitle} placement={iconTooltipPlacement}>
         <IconComponent />
       </CustomTooltip>
     </span>
@@ -264,7 +275,7 @@ const DynamicIcon = ({
       <IconComponent
         color={color}
         size={size}
-        className="cursor-pointer"
+        className={className}
         onClick={onClickHandel}
       />
     </CustomTooltip>

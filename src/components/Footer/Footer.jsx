@@ -28,7 +28,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="px-10 max-sm:px-0 py-2  bg-customDarkBgColor">
+      <div className="px-10 xs:px-0 sm:px-0 py-2  bg-customDarkBgColor">
         <Row gutter={[5, 0]} style={{ marginLeft: 0, marginRight: 0 }}>
           <Col xs={24} sm={12} md={12} lg={6} className="gutter-row">
             <div style={style}>

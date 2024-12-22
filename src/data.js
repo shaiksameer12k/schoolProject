@@ -1,11 +1,31 @@
 export const menuData = [
-  { menu_id: 1, menu_name: "Dashboard", menu_path: "/layout/dashboard" },
+  {
+    menu_id: 1,
+    menu_name: "Dashboard",
+    menu_path: "/layout/dashboard",
+    route: "dashboard",
+  },
   // { menu_id: 2, menu_name: "SSLC", menu_path: "/SSLC" },
   // { menu_id: 3, menu_name: "PUC", menu_path: "/PUC" },
   // { menu_id: 4, menu_name: "Degree", menu_path: "/Degree" },
-  { menu_id: 2, menu_name: "Students List", menu_path: "/layout/studentsList" },
-  { menu_id: 3, menu_name: "User Master", menu_path: "/layout/userMaster" },
-  { menu_id: 4, menu_name: "User Login", menu_path: "/layout/userLogin" },
+  {
+    menu_id: 2,
+    menu_name: "Students List",
+    menu_path: "/layout/studentsList",
+    route: "studentsList",
+  },
+  {
+    menu_id: 3,
+    menu_name: "User Master",
+    menu_path: "/layout/userMaster",
+    route: "userMaster",
+  },
+  {
+    menu_id: 4,
+    menu_name: "User Login",
+    menu_path: "/layout/userLogin",
+    route: "userLogin",
+  },
 ];
 
 export const items = [
@@ -15,6 +35,7 @@ export const items = [
     path: "/layout/profile",
     icon: "FaUser",
     isVisible: false,
+    route: "profile",
   },
   {
     key: "2",
@@ -22,6 +43,7 @@ export const items = [
     path: "/layout/dashboard",
     icon: "FaHome",
     isVisible: true,
+    route: "dashboard",
   },
 
   {
@@ -30,6 +52,7 @@ export const items = [
     path: "/layout/studentsList",
     icon: "BsShop",
     isVisible: true,
+    route: "studentsList",
   },
   {
     key: "4",
@@ -37,6 +60,7 @@ export const items = [
     path: "/layout/userMaster",
     icon: "BsShop",
     isVisible: true,
+    route: "userMaster",
   },
   {
     key: "5",
@@ -44,5 +68,6 @@ export const items = [
     path: "/layout/userLogin",
     icon: "FaUser",
     isVisible: true,
+    route: "userLogin",
   },
 ];

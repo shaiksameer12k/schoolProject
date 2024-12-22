@@ -4,9 +4,12 @@ import InputField from "../../../reusable/InputField/InputField";
 import { studentStartAssessmentDetails } from "../../../data/formData";
 import { Col, Row, Grid } from "antd";
 import WebcamComponent from "../../WebCam/WebCam";
+import { useNavigate, useParams } from "react-router-dom";
 const UserStartAssessment = () => {
   let screen = Grid.useBreakpoint();
-  console.log("screen", screen);
+  let navigate = useNavigate();
+  let { subjectName } = useParams();
+  console.log("screen", screen, subjectName);
   return (
     <div className="h-full ">
       <Row gutter={[8, 8]} className="h-full">
@@ -54,6 +57,9 @@ const UserStartAssessment = () => {
                     name="Start Assessment"
                     size="medium"
                     btnStyle={{ width: "50%", margin: 0 }}
+                    onClick={() =>
+                      navigate(`/layout/userLogin/${subjectName}/2}`)
+                    }
                   />
                 </Col>
               </Row>
@@ -97,6 +103,9 @@ const UserStartAssessment = () => {
                     name="Start Assessment"
                     size="medium"
                     btnStyle={{ width: "50%", margin: 0 }}
+                    onClick={() =>
+                      navigate(`/layout/userLogin/${subjectName}/2}`)
+                    }
                   />
                 </Col>
               </Row>

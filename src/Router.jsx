@@ -11,6 +11,7 @@ import Studentslist from "./components/Main/pages/Studentslist";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import UserStartAssessment from "./components/Main/pages/UserStartAssessment";
 import IndudalStudentData from "./components/Main/pages/IndudalStudentData";
+import UserSubjectList from "./components/Main/pages/UserSubjectList";
 
 const Router = () => {
   return (
@@ -27,7 +28,15 @@ const Router = () => {
           element={<IndudalStudentData />}
         />
         <Route path="userMaster" element={<StudentRegisterForm />} />
-        <Route path="userLogin" element={<UserStartAssessment />} />
+        <Route path="userLogin" element={<UserSubjectList />} />
+        <Route
+          path="userLogin/:subjectName"
+          element={<UserStartAssessment />}
+        />
+        <Route
+          path="userLogin/:subjectName/:studentId"
+          element={<IndudalStudentData />}
+        />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

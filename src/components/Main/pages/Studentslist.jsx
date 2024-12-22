@@ -55,9 +55,9 @@ const Studentslist = () => {
   ];
   const [selectedData, setSelectedData] = useState([]);
   const data = [
-    { id: 1, student_name: "Sameer", science: 30, english: 40, hindi: 50 },
-    { id: 2, student_name: "Sahil", science: 20, english: 60, hindi: 10 },
-    { id: 3, student_name: "Ismail", science: 40, english: 20, hindi: 80 },
+    { id: 1, student_name: "test01", science: 30, english: 40, hindi: 50 },
+    { id: 2, student_name: "test02", science: 20, english: 60, hindi: 10 },
+    { id: 3, student_name: "test03", science: 40, english: 20, hindi: 80 },
   ];
   let navegate = useNavigate();
 

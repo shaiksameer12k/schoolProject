@@ -46,24 +46,27 @@ const Header = ({ scrollY }) => {
 
       <nav className="flex items-center gap-4  h-full">
         <ul className="flex gap-4 items-center" id="lg_menu">
-          {items.filter(item=> item.isVisible).map((item) => (
-            <li>
-              <Link
-                to={item?.path}
-                className={
-                  (item.path.includes(CurrentRoute()) &&
-                    pathName !== "/" &&
-                    CurrentRoute() != "layout") ||
-                  (CurrentRoute() == "layout" &&
-                    item.path.includes("dashboard"))
-                    ? "menu-item active-menu-item"
-                    : "menu-item"
-                }
-              >
-                {item?.label}
-              </Link>
-            </li>
-          ))}
+          {items
+            .filter((item) => item.isVisible)
+            .map((item) => (
+              <li>
+                <Link
+                  to={item?.path}
+                  className={
+                    (item.path.includes(CurrentRoute()) &&
+                      pathName !== "/" &&
+                      CurrentRoute() != "layout") ||
+                    (CurrentRoute() == "layout" &&
+                      item.path.includes("dashboard"))
+                      ? "menu-item active-menu-item"
+                      : "menu-item"
+                  }
+                >
+                  {console.log("item", item.path.includes(item?.route))}
+                  {item?.label}
+                </Link>
+              </li>
+            ))}
         </ul>
 
         <div
@@ -111,7 +114,7 @@ const Header = ({ scrollY }) => {
             </div>
           </li> */}
           <li>
-            <div >
+            <div>
               {/* <DynamicIcon
                 iconName="FaUser"
                 color="#ff1f59c4"

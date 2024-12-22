@@ -19,12 +19,7 @@ const OMRAnswerSheet = () => {
     },
     {
       question: "Who discovered gravity?",
-      options: [
-        "Albert Einstein",
-        "Isaac Newton",
-        "Galileo",
-        "Nikola Tesla",
-      ],
+      options: ["Albert Einstein", "Isaac Newton", "Galileo", "Nikola Tesla"],
     },
     {
       question: "Which planet is known as the Red Planet?",
@@ -62,12 +57,7 @@ const OMRAnswerSheet = () => {
     },
     {
       question: "Which is the tallest mountain in the world?",
-      options: [
-        "Mount Kilimanjaro",
-        "Mount Everest",
-        "K2",
-        "Mount Fuji",
-      ],
+      options: ["Mount Kilimanjaro", "Mount Everest", "K2", "Mount Fuji"],
     },
   ];
 
@@ -131,13 +121,13 @@ const IndudalStudentData = () => {
         >
           {/* Right side content (student data) */}
           <div className="ml-5">
-            <Title level={3}>John Doe</Title>
-            {/* <Text className="text-gray-600">Student ID: 12345</Text> */}
-
             {/* Basic Information */}
             <div className="mt-4 space-y-2">
               <div>
-                <strong>Email:</strong> johndoe@example.com
+                <strong>Name:</strong> Test
+              </div>
+              <div>
+                <strong>Email:</strong> test@example.com
               </div>
               <div>
                 <strong>Age:</strong> 22
