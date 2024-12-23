@@ -37,14 +37,23 @@ const NotFoundPage = () => {
               <div className="mt-6 flex items-center space-x-3">
                 <ButtonComponent
                   name={`Go To
-                    ${location.pathname.includes("layout") ? "Home" : "Login"}
+                    ${
+                      location.pathname.includes("layout") ||
+                      location.pathname.includes("StudentLayout")
+                        ? "Home"
+                        : "Login"
+                    }
                     Page`}
                   size="large"
                   onClick={() =>
                     navigate(
                       location.pathname.includes("layout")
                         ? "/layout/dashboard"
-                        : "/loginPage"
+                        : location.pathname.includes("StudentLayout")
+                        ? "/StudentLayout"
+                        : location.pathname.includes("StudentLoginPage")
+                        ? "/StudentLoginPage"
+                        : "/AdminLoginPage"
                     )
                   }
                   btnStyle={{ width: "100%", margin: 0 }}

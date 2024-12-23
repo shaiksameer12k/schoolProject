@@ -47,7 +47,7 @@ const Router = () => {
         />
       </Route>
 
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="*" element={<PageNotFound isAdimn={isAdimn} />} />
     </Routes>
   );
 };
