@@ -12,13 +12,17 @@ import PageNotFound from "./components/PageNotFound/PageNotFound";
 import UserStartAssessment from "./components/Main/pages/UserStartAssessment";
 import IndudalStudentData from "./components/Main/pages/IndudalStudentData";
 import UserSubjectList from "./components/Main/pages/UserSubjectList";
+import UserLoginComponent from "./components/LoginPage/UserLoginComponent";
 
 const Router = () => {
+  let isAdimn = true;
   return (
     <Routes>
       <Route path="/" element={<LoginComponent />} />
-      <Route path="/loginPage" element={<LoginComponent />} />
-      <Route path="/layout" element={<Layout />}>
+      <Route path="/AdminLoginPage" element={<LoginComponent />} />
+      <Route path="/StudentLoginPage" element={<UserLoginComponent />} />
+
+      <Route path="/layout" element={<Layout isAdimn={true} />}>
         <Route index element={<Dashboard />} />
 
         <Route path="dashboard" element={<Dashboard />} />
@@ -28,6 +32,10 @@ const Router = () => {
           element={<IndudalStudentData />}
         />
         <Route path="userMaster" element={<StudentRegisterForm />} />
+      </Route>
+
+      <Route path="/StudentLayout" element={<Layout isAdimn={false} />}>
+        <Route index element={<UserSubjectList />} />
         <Route path="userLogin" element={<UserSubjectList />} />
         <Route
           path="userLogin/:subjectName"
@@ -38,6 +46,7 @@ const Router = () => {
           element={<IndudalStudentData />}
         />
       </Route>
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

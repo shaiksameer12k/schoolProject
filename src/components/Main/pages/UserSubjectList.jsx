@@ -33,7 +33,7 @@ const UserSubjectList = () => {
     },
   ];
   const onClickHandel = (CardName) => {
-    navigate(`/layout/userLogin/${CardName}`);
+    navigate(`/StudentLayout/userLogin/${CardName}`);
   };
   return (
     <div>

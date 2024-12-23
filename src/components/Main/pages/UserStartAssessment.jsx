@@ -104,7 +104,7 @@ const UserStartAssessment = () => {
                     size="medium"
                     btnStyle={{ width: "50%", margin: 0 }}
                     onClick={() =>
-                      navigate(`/layout/userLogin/${subjectName}/2}`)
+                      navigate(`/StudentLayout/userLogin/${subjectName}/2}`)
                     }
                   />
                 </Col>

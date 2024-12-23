@@ -4,7 +4,7 @@ import { FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import DynamicIcon from "../IconComponent/IconComponent";
 
-const UserMenu = () => {
+const UserMenu = ({ isAdimn }) => {
   const navigate = useNavigate();
 
   const handleMenuClick = (e) => {
@@ -13,7 +13,7 @@ const UserMenu = () => {
     } else if (e.key === "logout") {
       // Handle logout logic here
       console.log("Logged out");
-      return navigate("/loginPage");
+      return navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage");
     }
   };
 

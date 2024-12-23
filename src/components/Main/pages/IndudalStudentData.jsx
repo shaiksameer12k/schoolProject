@@ -146,14 +146,14 @@ const IndudalStudentData = () => {
         <OMRAnswerSheet />
 
         {/* Action Buttons */}
-        <div className="mt-10 flex justify-between space-x-4">
-          <Button
+        <div className="mt-10 flex justify-end space-x-4">
+          {/* <Button
             type="default"
             size="large"
             onClick={() => navegate(`/layout/studentsList`)}
           >
             Back
-          </Button>
+          </Button> */}
           <Button type="primary" size="large">
             Submit Answers
           </Button>

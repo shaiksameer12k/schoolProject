@@ -7,7 +7,7 @@ import { MailOutlined, SecurityScanOutlined } from "@ant-design/icons";
 // import 'antd/dist/antd.css';  // Import Ant Design styles
 // import './LoginComponent.css'; // You can create a custom CSS file if needed
 
-const LoginComponent = () => {
+const UserLoginComponent = () => {
   let navigate = useNavigate();
   const loginHandel = () => {
     navigate("/layout");
@@ -45,7 +45,7 @@ const LoginComponent = () => {
 
     console.log("Logged in:", { email, password });
     message.success("SuccessFully Login");
-    navigate("/layout");
+    navigate("/StudentLayout");
   };
 
   const handleRememberMeChange = (e) => {
@@ -67,7 +67,7 @@ const LoginComponent = () => {
         >
           <div className="text-start mb-6">
             <h2 className="text-3xl font-semibold text-primaryTextColor">
-              Admin Sign In
+             Student Sign In
             </h2>
           </div>
 
@@ -156,4 +156,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default UserLoginComponent;

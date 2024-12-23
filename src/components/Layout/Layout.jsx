@@ -7,7 +7,7 @@ import { FloatButton } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent.jsx";
 import { Outlet, useLocation } from "react-router-dom";
 
-const Layout = () => {
+const Layout = ({isAdimn}) => {
   const [scrollY, setScrollY] = useState(null);
   let location = useLocation();
   useEffect(() => {
@@ -39,7 +39,7 @@ const Layout = () => {
 
   return (
     <div className="w-full" ref={containerRef}>
-      <Header scrollY={scrollY} />
+      <Header scrollY={scrollY} isAdimn={isAdimn}/>
       <div
         className=" px-3 py-2 bg-customlightGrayBgColor"
         style={{
