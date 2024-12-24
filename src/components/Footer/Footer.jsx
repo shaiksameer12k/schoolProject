@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo1.png";
 import { Col, Row, Image } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent";
 
@@ -31,7 +31,7 @@ const Footer = () => {
         <Row gutter={[5, 0]} style={{ marginLeft: 0, marginRight: 0 }}>
           <Col xs={24} sm={12} md={12} lg={6} className="gutter-row">
             <div style={style}>
-              {/* <Image src={logo} width={150} alt="Logo" /> */}
+              <Image src={logo} width={150} alt="Logo" />
               <span style={footerContent}>
                 We support programs that create advancement opportunities for
                 people.

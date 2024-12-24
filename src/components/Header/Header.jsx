@@ -42,10 +42,7 @@ const Header = ({ scrollY, isAdimn }) => {
         height: "50px",
       }}
     >
-      <div className="flex items-center gap-2">
-        <Image src={logo} id="header_logo" />
-        <span className="font-bold text-xl text-logoTextColor">SunRise</span>
-      </div>
+      <Image src={logo} id="header_logo" />
 
       <nav className="flex items-center gap-4  h-full">
         {isAdimn && (
