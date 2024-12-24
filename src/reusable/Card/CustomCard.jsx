@@ -26,14 +26,14 @@ const CustomCard = ({
         <div className="absolute flex justify-center items-center opacity-20 rotate-45">
           <DynamicIcon iconName={cardIcon} color="#ffffff" size={"30%"} />
         </div>
-        <Col xs={8} sx={8} lg={8} className="gutter-row">
+       {cardIcon && <Col xs={8} sx={8} lg={8} className="gutter-row">
           <DynamicIcon
             iconName={cardIcon}
             color="#ffffff"
             size={"100%"}
             className="rotate-45"
           />
-        </Col>
+        </Col>}
         <Col xs={16} sx={16} lg={16} className="gutter-row">
           <div>
             <h3

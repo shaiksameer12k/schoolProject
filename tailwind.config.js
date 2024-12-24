@@ -8,6 +8,7 @@ export default {
         iconHoverColor: "#ff1f59",
         linkColor: "#1ca0dc",
         primaryTextColor: "#ff8383",
+        logoTextColor:"#ffcc2a"
       },
 
       backgroundColor: {

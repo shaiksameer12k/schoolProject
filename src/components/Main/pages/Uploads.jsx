@@ -67,13 +67,13 @@ const OMRAnswerSheet = ({
       options: ["Mount Kilimanjaro", "Mount Everest", "K2", "Mount Fuji"],
     },
   ];
-
+  const screen = useBreakpoint();
   return (
     <div className="mt-1">
-      <div className="flex justify-between items-center">
-        <Typography.Title level={4}>
+      <div className="flex justify-between items-center ">
+        <Typography.Title level={screen.xs ? 5 : 4}>
           OMR Answer Sheet Of{" "}
-          <span className="text-red-700 text-3xl"> {selectedData} </span>
+          <span className="text-red-700 text-3xl xs:text-2xl"> {selectedData} </span>
         </Typography.Title>
 
         <ButtonComponent
@@ -219,7 +219,7 @@ const Uploads = () => {
     <div>
       <Row gutter={[8, 8]}>
         {cardsData?.map((card) => (
-          <Col xs={24} sm={12} md={12} lg={4}>
+          <Col xs={8} sm={12} md={12} lg={4}>
             <CustomCard
               key={card?.cardId}
               cardName={card?.cardName}
@@ -272,7 +272,7 @@ const Uploads = () => {
                   onChange={onChangeHandel}
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" span={screens?.xs ? 24 : 6}>
                 <InputField
                   type="text"
                   isError=""
@@ -283,7 +283,7 @@ const Uploads = () => {
                   onChange={onChangeHandel}
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" span={screens?.xs ? 24 : 6}>
                 <InputField
                   type="text"
                   isError=""
@@ -294,7 +294,7 @@ const Uploads = () => {
                   onChange={onChangeHandel}
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" span={screens?.xs ? 24 : 6}>
                 <InputField
                   type="text"
                   isError=""
@@ -305,7 +305,7 @@ const Uploads = () => {
                   onChange={onChangeHandel}
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" span={screens?.xs ? 24 : 6}>
                 <InputField
                   type="text"
                   isError=""

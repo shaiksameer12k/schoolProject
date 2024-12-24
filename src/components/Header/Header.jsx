@@ -1,6 +1,6 @@
 import { Badge, Image, Menu, Space } from "antd";
 import React, { useState } from "react";
-import logo from "../../assets/smart_x_logo.png";
+import logo from "../../assets/logo.png";
 import MenuDrawer from "../Main/MenuDrawer/MenuDrawer";
 import { items, menuData } from "../../data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -42,7 +42,10 @@ const Header = ({ scrollY, isAdimn }) => {
         height: "50px",
       }}
     >
-      <Image src={logo} id="header_logo" />
+      <div className="flex items-center gap-2">
+        <Image src={logo} id="header_logo" />
+        <span className="font-bold text-xl text-logoTextColor">SunRise</span>
+      </div>
 
       <nav className="flex items-center gap-4  h-full">
         {isAdimn && (

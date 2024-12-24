@@ -1,10 +1,9 @@
 import React from "react";
-// import logo from "../../assets/smart-x_whiteBg.png";
+import logo from "../../assets/logo.png";
 import { Col, Row, Image } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent";
 
 const Footer = () => {
-  let logo; // Assign the logo if needed
   const style = {
     height: "100%",
     display: "flex",
@@ -28,11 +27,11 @@ const Footer = () => {
 
   return (
     <>
-      <div className="px-10 xs:px-0 sm:px-0 py-2  bg-customDarkBgColor">
+      <div className="px-10 py-2 xs:px-0 sm:px-0   bg-customDarkBgColor">
         <Row gutter={[5, 0]} style={{ marginLeft: 0, marginRight: 0 }}>
           <Col xs={24} sm={12} md={12} lg={6} className="gutter-row">
             <div style={style}>
-              <Image src={logo} width={150} alt="Logo" />
+              {/* <Image src={logo} width={150} alt="Logo" /> */}
               <span style={footerContent}>
                 We support programs that create advancement opportunities for
                 people.
@@ -107,7 +106,7 @@ const Footer = () => {
           </Col>
         </Row>
         <hr />
-        <div className="flex justify-between max-sm:flex-col max-sm:justify-center  items-center">
+        <div className=" px-2 flex justify-between max-sm:flex-col max-sm:justify-center  items-center">
           <span
             style={{
               ...footerContent,

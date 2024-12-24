@@ -8,7 +8,7 @@
     padding: 0px 10px !important;
   }
   #header_logo {
-    width: 120px;
+    width: 8%;
   }
   #hero_section_title {
     font-size: 32px !important;
@@ -66,7 +66,7 @@
     padding: 0px 10px !important;
   }
   #header_logo {
-    width: 120px;
+    width: 8%;
   }
   #hero_section_title {
     font-size: 32px;
@@ -112,7 +112,7 @@
     display: none;
   }
   #header_logo {
-    width: 120px;
+    width: 8%;
   }
   #loginScreen {
     /* background-position-y: -10px; */
@@ -152,7 +152,7 @@
     height: 200px;
   }
   #header_logo {
-    width: 120px;
+    width: 8%;
   }
   #loginScreen {
     background-image: none;
@@ -182,7 +182,7 @@
     height: 400px;
   }
   #header_logo {
-    width: 150px;
+    width: 8%;
   }
   #loginScreen {
     background-image: none;
@@ -212,7 +212,7 @@
     height: 30%;
   }
   #header_logo {
-    width: 200px;
+    width: 8%;
   }
   #loginScreen {
     background-image: none;

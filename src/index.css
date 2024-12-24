@@ -34,9 +34,9 @@ code {
     monospace;
 }
 
-ul li span {
+/* ul li span {
   color: #000000;
-}
+} */
 .overflow-hidden {
   height: 100%;
 }
