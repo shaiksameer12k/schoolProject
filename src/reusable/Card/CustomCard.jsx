@@ -9,6 +9,7 @@ const CustomCard = ({
   totalCount,
   complitedCount,
   onClickHandel,
+  selectedData,
 }) => {
   return (
     <Card
@@ -19,6 +20,7 @@ const CustomCard = ({
         cursor: "pointer",
       }}
       onClick={() => onClickHandel(cardName)}
+      className="shadow-lg"
     >
       <Row gutter={16} className="relative w-full">
         <div className="absolute flex justify-center items-center opacity-20 rotate-45">
@@ -34,10 +36,20 @@ const CustomCard = ({
         </Col>
         <Col xs={16} sx={16} lg={16} className="gutter-row">
           <div>
-            <h3 className="text-xl font-bold">{cardName}</h3>
-            <span className="text-sm font-semibold">
-              Qns : {complitedCount}/{totalCount}
-            </span>
+            <h3
+              className={
+                cardName == selectedData
+                  ? "text-xl font-bold text-white"
+                  : "text-xl font-bold text-black"
+              }
+            >
+              {cardName}
+            </h3>
+            {totalCount && (
+              <span className="text-sm font-semibold">
+                Qns : {complitedCount}/{totalCount}
+              </span>
+            )}
           </div>
         </Col>
       </Row>

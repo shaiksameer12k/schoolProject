@@ -281,7 +281,7 @@ const InputField = ({
     <Form.Item
       label={type === "checkbox" || type === "radio" ? "" : label}
       key={name}
-      name={name}
+      // name={name}
       placeholder={placeholder}
       required={isMandatory}
       style={style}

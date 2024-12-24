@@ -8,7 +8,7 @@ import { Col, Row } from "antd";
 
 const Dashboard = () => {
   let data02 = [
-    { type: "SSC", value: 25 },
+    { type: "SSLC", value: 25 },
     { type: "PUC", value: 27 },
     { type: "Degree", value: 25 },
   ];

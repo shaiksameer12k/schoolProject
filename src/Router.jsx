@@ -13,6 +13,7 @@ import UserStartAssessment from "./components/Main/pages/UserStartAssessment";
 import IndudalStudentData from "./components/Main/pages/IndudalStudentData";
 import UserSubjectList from "./components/Main/pages/UserSubjectList";
 import UserLoginComponent from "./components/LoginPage/UserLoginComponent";
+import Uploads from "./components/Main/pages/Uploads";
 
 const Router = () => {
   let isAdimn = true;
@@ -32,6 +33,7 @@ const Router = () => {
           element={<IndudalStudentData />}
         />
         <Route path="userMaster" element={<StudentRegisterForm />} />
+        <Route path="uploads" element={<Uploads />} />
       </Route>
 
       <Route path="/StudentLayout" element={<Layout isAdimn={false} />}>

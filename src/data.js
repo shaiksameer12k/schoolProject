@@ -20,12 +20,12 @@ export const menuData = [
     menu_path: "/layout/userMaster",
     route: "userMaster",
   },
-  // {
-  //   menu_id: 4,
-  //   menu_name: "User Login",
-  //   menu_path: "/layout/userLogin",
-  //   route: "userLogin",
-  // },
+  {
+    menu_id: 4,
+    menu_name: "Questions Uploads",
+    menu_path: "/layout/uploads",
+    route: "uploads",
+  },
 ];
 
 export const items = [
@@ -62,12 +62,12 @@ export const items = [
     isVisible: true,
     route: "userMaster",
   },
-  // {
-  //   key: "5",
-  //   label: "User Login",
-  //   path: "/layout/userLogin",
-  //   icon: "FaUser",
-  //   isVisible: true,
-  //   route: "userLogin",
-  // },
+  {
+    key: "5",
+    label: "Questions Uploads",
+    path: "/layout/uploads",
+    icon: "FaUpload",
+    isVisible: true,
+    route: "uploads",
+  },
 ];

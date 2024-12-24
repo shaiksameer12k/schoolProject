@@ -585,7 +585,7 @@ export const catagoryFieldsData = [
     type: "select", // dropdown/select for level
     name: "level",
     options: [
-      { label: "SSC", value: "ssc" },
+      { label: "SSLC", value: "SSLC" },
       { label: "PUC", value: "puc" },
       { label: "Degree", value: "degree" },
     ],
