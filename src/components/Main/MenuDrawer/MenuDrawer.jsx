@@ -38,15 +38,23 @@ const MenuDrawer = ({ drawerState = false, onClose }) => {
   return (
     <>
       <Drawer
-        title="Smart-X Technologys"
+        title="SunRise"
         placement="left"
         closable={drawerState}
         onClose={onClose}
         open={drawerState}
         key={"left"}
-        style={{ width: "60%", padding: "15px 0px 0px 0px", background: "#2c1944" }}
+        style={{
+          width: "20%",
+          padding: "15px 0px 0px 0px",
+          background: "#2c1944",
+        }}
         footer={
-          <div style={{ display: "flex", gap: 2 , paddingLeft:'24px' }} className="ant-menu-item py-3" onClick={()=> navigate("/loginPage")}>
+          <div
+            style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
+            className="ant-menu-item py-3"
+            onClick={() => navigate("/")}
+          >
             <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
             <span className="ant-menu-title-content">Log Out</span>
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Main from "./components/Main/Main";
 
@@ -15,8 +15,12 @@ import UserSubjectList from "./components/Main/pages/UserSubjectList";
 import UserLoginComponent from "./components/LoginPage/UserLoginComponent";
 import Uploads from "./components/Main/pages/Uploads";
 
+
 const Router = () => {
   let isAdimn = true;
+
+
+
   return (
     <Routes>
       <Route path="/" element={<LoginComponent />} />

@@ -258,10 +258,16 @@ code {
 .ant-form-item-label {
   padding: 0px !important;
 }
-/* 
+
 .ant-form-item-additional{
-  display: none !important;
-} */
+ min-height: 8px !important;
+}
  .ant-picker{
   width: 100% !important;
+ }
+
+
+ /* ante desing file upload  */
+ .ant-upload{
+  display: block !important;
  }

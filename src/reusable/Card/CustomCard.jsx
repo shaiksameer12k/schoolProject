@@ -10,6 +10,8 @@ const CustomCard = ({
   complitedCount,
   onClickHandel,
   selectedData,
+  cardId,
+  cardsData,
 }) => {
   return (
     <Card
@@ -19,21 +21,23 @@ const CustomCard = ({
         color: "#ffffff",
         cursor: "pointer",
       }}
-      onClick={() => onClickHandel(cardName)}
+      onClick={() => onClickHandel(cardId, cardsData)}
       className="shadow-lg"
     >
       <Row gutter={16} className="relative w-full">
         <div className="absolute flex justify-center items-center opacity-20 rotate-45">
           <DynamicIcon iconName={cardIcon} color="#ffffff" size={"30%"} />
         </div>
-       {cardIcon && <Col xs={8} sx={8} lg={8} className="gutter-row">
-          <DynamicIcon
-            iconName={cardIcon}
-            color="#ffffff"
-            size={"100%"}
-            className="rotate-45"
-          />
-        </Col>}
+        {cardIcon && (
+          <Col xs={8} sx={8} lg={8} className="gutter-row">
+            <DynamicIcon
+              iconName={cardIcon}
+              color="#ffffff"
+              size={"100%"}
+              className="rotate-45"
+            />
+          </Col>
+        )}
         <Col xs={16} sx={16} lg={16} className="gutter-row">
           <div>
             <h3

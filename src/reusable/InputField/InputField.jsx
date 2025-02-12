@@ -137,6 +137,9 @@ import {
 } from "antd";
 import FileUpload from "../FileUpload/FileUpload";
 import { runes } from "runes2";
+import { CustomTooltip } from "../CustomToolTip/CustomToolTip";
+import DynamicIcon from "../IconComponent/IconComponent";
+import moment from "moment";
 const { RangePicker } = DatePicker;
 
 // The main InputField component where props are directly destructured
@@ -164,8 +167,13 @@ const InputField = ({
   onSearch,
   prefix,
   suffix,
+  regexType,
   variant = "outlined",
   size = "middle",
+  fields = [],
+  field = {},
+  data = [],
+  removeSelectedFileHandel,
 }) => {
   // console.log("select", name, value.length);
   // Handle different field types dynamically
@@ -206,8 +214,24 @@ const InputField = ({
         return (
           <DatePicker
             name={name}
-            onChange={onChange}
-            value={value}
+            onChange={(value) => {
+              console.log(value);
+              return onChange(
+                {
+                  target: {
+                    name: name, // the name of the input field
+                    value: value, // the new value after change
+                    type: type, // the type of the input (e.g., 'text', 'checkbox')
+                  },
+                },
+
+                fields,
+                regexType,
+                maxLength,
+                field
+              );
+            }}
+            value={value ? moment(value) : ""}
             disabled={idDisabled}
             style={style}
           />
@@ -217,13 +241,98 @@ const InputField = ({
           <RangePicker
             name={name}
             value={value}
-            onChange={onChange}
+            // onChange={onChange}
+            onChange={(value) => {
+              console.log(value);
+              return onChange(
+                {
+                  target: {
+                    name: name, // the name of the input field
+                    value: value, // the new value after change
+                    type: type, // the type of the input (e.g., 'text', 'checkbox')
+                  },
+                },
+
+                fields,
+                regexType,
+                maxLength,
+                field
+              );
+            }}
             disabled={idDisabled}
             style={style}
           />
         );
       case "file":
-        return <FileUpload />;
+        return (
+          <>
+            <div className="mt-1">
+              {data.length > 0 || value.length > 0 ? (
+                data.length > 0 ? (
+                  <div className="flex gap-2">
+                    {data.map((file) => (
+                      <div className="flex">
+                        <span className="text-linkColor text-xs">
+                          {file?.base64FileName}
+                        </span>
+                        <CustomTooltip
+                          tooltipTitle="Click To Remove Selected File"
+                          tooltipPlacement="bottom-start"
+                        >
+                          <div className="cursor-pointer">
+                            <DynamicIcon
+                              iconName="IoIosCloseCircle"
+                              color="#B43F3F"
+                              onClickHandel={() =>
+                                removeSelectedFileHandel(
+                                  name,
+                                  field?.multiple,
+                                  file?.base64Id
+                                )
+                              }
+                            />
+                          </div>
+                        </CustomTooltip>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex">
+                    <span className="text-linkColor text-xs">{value}</span>
+                    <CustomTooltip
+                      tooltipTitle="Click To Remove Selected File"
+                      tooltipPlacement="bottom-start"
+                    >
+                      <div className="cursor-pointer">
+                        <DynamicIcon
+                          iconName="IoIosCloseCircle"
+                          color="#B43F3F"
+                          onClickHandel={() =>
+                            removeSelectedFileHandel(name, field?.multiple)
+                          }
+                        />
+                      </div>
+                    </CustomTooltip>
+                  </div>
+                )
+              ) : (
+                <>
+                  <div className="border-gray-300 h-8 rounded-sm w-full border flex items-center px-2">
+                    <input
+                      style={{ ...style, width: "100%" }}
+                      type={type}
+                      placeholder={placeholder}
+                      name={name}
+                      onChange={onChange}
+                      value={value}
+                      multiple={field?.multiple}
+                    ></input>
+                  </div>
+                </>
+              )}
+            </div>
+          </>
+        );
       case "select":
         return (
           <>
@@ -232,10 +341,25 @@ const InputField = ({
               placeholder={placeholder ? placeholder : `Select a ${label}`}
               showSearch
               optionFilterProp="label"
-              onChange={onChange}
+              onChange={(value) =>
+                onChange(
+                  {
+                    target: {
+                      name: name, // the name of the input field
+                      value: value, // the new value after change
+                      type: type, // the type of the input (e.g., 'text', 'checkbox')
+                    },
+                  },
+
+                  fields,
+                  regexType,
+                  maxLength,
+                  field
+                )
+              }
               onSearch={onSearch}
               options={options}
-              value={value}
+              value={!value ? null : value}
               name={name}
               allowClear
               disabled={idDisabled}

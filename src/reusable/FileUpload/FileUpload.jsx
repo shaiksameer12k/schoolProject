@@ -1,31 +1,34 @@
-import React from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload } from 'antd';
+import React from "react";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, message, Upload } from "antd";
 
 const FileUpload = ({ actionUrl, onUploadSuccess, onUploadError }) => {
   const props = {
-    name: 'file',
+    name: "file",
     action: actionUrl,
     headers: {
-      authorization: 'authorization-text', // Add your authorization if needed
+      authorization: "authorization-text", // Add your authorization if needed
     },
     onChange(info) {
-      if (info.file.status !== 'uploading') {
+      if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
-      if (info.file.status === 'done') {
+      if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
         if (onUploadSuccess) onUploadSuccess(info.file);
-      } else if (info.file.status === 'error') {
+      } else if (info.file.status === "error") {
         message.error(`${info.file.name} file upload failed.`);
         if (onUploadError) onUploadError(info.file);
       }
     },
+    
   };
 
   return (
-    <Upload {...props}>
-      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+    <Upload {...props} style={{ display: "block" }}>
+      <Button icon={<UploadOutlined />} className="w-full h-20  gap-2">
+        Click to Upload
+      </Button>
     </Upload>
   );
 };

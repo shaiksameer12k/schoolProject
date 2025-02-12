@@ -6,10 +6,14 @@ import Footer from "../Footer/Footer";
 import { FloatButton } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent.jsx";
 import { Outlet, useLocation } from "react-router-dom";
+import axios from "axios";
+import MenuDrawer from "../Main/MenuDrawer/MenuDrawer.jsx";
+import { menuData } from "../../data.js";
 
-const Layout = ({isAdimn}) => {
+const Layout = ({ isAdimn }) => {
   const [scrollY, setScrollY] = useState(null);
   let location = useLocation();
+
   useEffect(() => {
     const handleScroll = () => {
       let scrollY = window.scrollY;
@@ -37,9 +41,16 @@ const Layout = ({isAdimn}) => {
     scrollToTop();
   }, [location]);
 
+  useEffect(() => {
+    if (!axios.defaults.headers.common["Authorization"]) {
+      let token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, [axios.defaults.headers.common["Authorization"]]);
+
   return (
     <div className="w-full" ref={containerRef}>
-      <Header scrollY={scrollY} isAdimn={isAdimn}/>
+      <Header scrollY={scrollY} isAdimn={isAdimn} />
       <div
         className=" px-3 py-2 bg-customlightGrayBgColor"
         style={{

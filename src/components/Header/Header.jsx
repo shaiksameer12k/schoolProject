@@ -14,7 +14,7 @@ const Header = ({ scrollY, isAdimn }) => {
   let loc = useLocation();
   let pathName = loc?.pathname;
 
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(true);
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -131,13 +131,13 @@ const Header = ({ scrollY, isAdimn }) => {
           </li>
         </ul>
 
-        <div id="sm_menu" className="flex items-center">
+        {/* <div id="sm_menu" className="flex items-center"> */}
           <DynamicIcon
             iconName="MdMenuOpen"
             size={30}
             onClickHandel={showDrawer}
           />
-        </div>
+        {/* </div> */}
 
         <MenuDrawer
           drawerState={openDrawer}

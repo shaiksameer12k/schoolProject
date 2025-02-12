@@ -4,6 +4,7 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import ExcelJS from "exceljs";
 
 import { generateToken } from "../api/generateToken";
+import { useApiCalls } from "../api/apiCalls";
 
 export const icon_size = 23;
 export const env = import.meta.env;
@@ -318,3 +319,4 @@ export const dataToExcelExport = async (
   a.click();
   window.URL.revokeObjectURL(url);
 };
+

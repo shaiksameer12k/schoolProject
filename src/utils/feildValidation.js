@@ -4,6 +4,10 @@ import imageCompression from "browser-image-compression";
 import { message } from "antd";
 // common field validation
 export const fieldValidate = (value, type) => {
+  if (!value) {
+    return value;
+  }
+
   console.log("fieldValidate", value, type);
   let updateValue = "";
   if (type === "text") {
@@ -13,7 +17,6 @@ export const fieldValidate = (value, type) => {
     // Remove extra spaces,  and trim the input value
     updateValue = value.replace(/['"]{1,}/g, "").trimStart();
   }
-
   updateValue = updateValue.replace(/^[^\w]+/, "");
   return updateValue;
 };
@@ -343,13 +346,15 @@ export async function centrliseFileFieldsValidation(
 ) {
   if (type === "file") {
     let data = [];
+    console.log(" [...event.target.files]", [...event.target.files]);
     if (fileUploadType == "multiple") {
       [...event.target.files].map(async (file, i) => {
         let fileData = await fileToBase64(file, name, fileTypeArray, fileSize);
-        data = [...data, fileData];
-        console.log("fileData", i, fileData);
+
+        return data.push(fileData);
       });
     }
+
     let fileData = await fileToBase64(
       event.target.files[0],
       name,
@@ -373,9 +378,11 @@ export async function centrliseFileFieldsValidation(
         : field
     );
 
+    console.log("updatedArray", updatedArray, data);
     return updatedArray;
   }
 }
+
 export function centrliseFieldsValidation(
   type,
   name,
@@ -459,7 +466,7 @@ export function centrliseFieldsValidation(
 
   let checkFieldMaxLimitCheckedArray = regexValidationCheckedArray;
 
-  if (type !== "dropdown") {
+  if (type !== "select") {
     checkFieldMaxLimitCheckedArray = checkFieldMaxLimit(
       name,
       regexValidationCheckedArray,

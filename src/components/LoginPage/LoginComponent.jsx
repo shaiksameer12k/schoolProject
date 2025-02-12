@@ -4,18 +4,81 @@ import ButtonComponent from "../../reusable/Button/ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../reusable/InputField/InputField";
 import { MailOutlined, SecurityScanOutlined } from "@ant-design/icons";
+import { useApiCalls } from "../../api/apiCalls";
+import { generateToken } from "../../api/generateToken";
 // import 'antd/dist/antd.css';  // Import Ant Design styles
 // import './LoginComponent.css'; // You can create a custom CSS file if needed
 
 const LoginComponent = () => {
   let navigate = useNavigate();
-  const loginHandel = () => {
-    navigate("/layout");
-  };
+  let { ApiCalls, loadingStates } = useApiCalls();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+
+  const [submitButtonLoaderState, setSubmitButtonLoaderState] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitButtonLoaderState(true);
+    loadingStates.handleSubmit = true;
+    console.log("inner handleSubmit ", loadingStates);
+    let token = await generateToken();
+    // Save credentials in localStorage if 'Remember Me' is checked
+    if (rememberMe) {
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+    } else {
+      // Remove credentials from localStorage if 'Remember Me' is not checked
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+    }
+
+    if (!email) {
+      return message.error("Please Fill UserName ");
+    }
+
+    if (!password) {
+      return message.error("Please Fill Password ");
+    }
+
+    if (!token) {
+      return message.error("Unauthorized");
+    }
+
+    // Here you can perform the login logic (API call, etc.)
+    try {
+      let params = JSON.stringify([{ UserName: email, Password: password }]);
+      let result = await ApiCalls(
+        "handleSubmit",
+        "post",
+        "Admin/AdminLogin",
+        params
+      );
+      console.log("handleSubmit", result);
+
+      if (result[0]?.Status > 0) {
+        let { Message, data } = result[0];
+        localStorage.setItem("loginUserData", JSON.stringify(data));
+        navigate("/layout");
+        return message.success(Message);
+      }
+      setSubmitButtonLoaderState(false);
+      loadingStates.handleSubmit = false;
+    } catch (error) {
+      console.log(`Error Admin/AdminLogin : ${error}`);
+    } finally {
+      setSubmitButtonLoaderState(false);
+      loadingStates.handleSubmit = false;
+    }
+  };
+
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked);
+  };
+
+  console.log("loadingStates", loadingStates);
 
   // Check if user credentials are already saved in localStorage
   useEffect(() => {
@@ -27,30 +90,6 @@ const LoginComponent = () => {
       setRememberMe(true);
     }
   }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Save credentials in localStorage if 'Remember Me' is checked
-    if (rememberMe) {
-      localStorage.setItem("email", email);
-      localStorage.setItem("password", password);
-    } else {
-      // Remove credentials from localStorage if 'Remember Me' is not checked
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-    }
-
-    // Here you can perform the login logic (API call, etc.)
-
-    console.log("Logged in:", { email, password });
-    message.success("SuccessFully Login");
-    navigate("/layout");
-  };
-
-  const handleRememberMeChange = (e) => {
-    setRememberMe(e.target.checked);
-  };
 
   return (
     <div
@@ -130,15 +169,14 @@ const LoginComponent = () => {
 
             {/* Login Button */}
             <div className="mb-4">
-              {/* <Button type="primary" className="w-full py-2 text-lg rounded-md">
-              
-            </Button> */}
               <ButtonComponent
                 name="Login"
                 type="primary"
                 onClick={handleSubmit}
                 size="large"
                 btnStyle={{ width: "100%" }}
+                loading={submitButtonLoaderState}
+                disabled={submitButtonLoaderState}
               />
             </div>
 
