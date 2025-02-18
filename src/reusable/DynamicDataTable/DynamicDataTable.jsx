@@ -235,6 +235,7 @@ const DynamicDataTable = ({
         tableLayout="auto"
         rowKey={customid}
         loading={loadingTableStatus}
+        
       />
     </>
   );

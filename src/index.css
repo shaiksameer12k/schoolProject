@@ -271,3 +271,71 @@ code {
  .ant-upload{
   display: block !important;
  }
+
+ /* ant-table-tbody */
+
+ .ant-table-tbody{
+  min-height: 400px !important;
+ }
+
+
+ /* custome scroll design css */
+/* Style for the container of the scrollable div */
+
+.custom-scrollbar-container:hover::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Change track background color on hover */
+}
+
+.custom-scrollbar-container:hover::-webkit-scrollbar-thumb {
+  background-color: #888; /* Change thumb color on hover */
+}
+
+.custom-scrollbar-container {
+  overflow: auto; /* Make sure the container has scrollable content */
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Custom scrollable content */
+.custom-scrollable-content {
+  padding: 10px;
+}
+
+/* Style the scrollbar itself */
+.custom-scrollbar-container::-webkit-scrollbar {
+  width: 5px; /* Adjust the width of the scrollbar */
+  height: 10px; /* For horizontal scrollbar */
+}
+
+/* Style the track (background) of the scrollbar */
+.custom-scrollbar-container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+.custom-scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Style the thumb when it's hovered over */
+.custom-scrollbar-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker thumb on hover */
+}
+
+/* For the horizontal scrollbar (if needed) */
+.custom-scrollbar-container::-webkit-scrollbar-horizontal {
+  height: 10px;
+}
+
+.custom-scrollbar-container::-webkit-scrollbar-track-horizontal {
+  background: #f1f1f1;
+}
+
+.custom-scrollbar-container::-webkit-scrollbar-thumb-horizontal {
+  background-color: #888;
+  border-radius: 10px;
+}

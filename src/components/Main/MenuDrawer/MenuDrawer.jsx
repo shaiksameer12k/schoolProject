@@ -3,37 +3,45 @@ import { Button, Divider, Drawer, Menu, Radio, Space } from "antd";
 import { items } from "../../../data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
-const MenuDrawer = ({ drawerState = false, onClose }) => {
+const MenuDrawer = ({ drawerState = false, onClose, menuList }) => {
   // hooks
   let loc = useLocation();
   let navigate = useNavigate();
   let pathName = loc?.pathname;
   console.log("loc", loc);
   const [selectedItem, setSelectedItem] = useState("1");
+  const [modifiedItems, setModifiedItems] = useState([]);
+
   const onClick = (e) => {
     setSelectedItem(e.key);
     onClose();
   };
   console.log("selectedItem", selectedItem);
 
-  const modifiedItems = items.map((item) => ({
-    key: item.key,
-    label: <Link to={item.path}>{item.label}</Link>,
-    icon: (
-      <DynamicIcon
-        iconName={item.icon}
-        color={selectedItem == item.key ? "#000000" : "#ffffff"}
-        size={18}
-      />
-    ),
-  }));
-
   useEffect(() => {
-    let item = items.find((item) => item.path.includes(pathName));
+    let item = menuList.find((item) => item?.Menu_Path?.includes(pathName));
     console.log("item", item);
     if (item) setSelectedItem(item?.key);
     else setSelectedItem("");
   }, [loc]);
+
+  useEffect(() => {
+    const modifiedMenuData = menuList.map((item) => ({
+      key: item.Menu_id,
+      label: <Link to={item.Menu_Path}>{item.Menu_name}</Link>,
+      icon: (
+        <DynamicIcon
+          iconName={item.icon}
+          color={selectedItem == item.key ? "#000000" : "#ffffff"}
+          size={18}
+        />
+      ),
+    }));
+    setModifiedItems(modifiedMenuData);
+  }, [menuList]);
+
+
+  console.log("modifiedItems",modifiedItems , menuList)
 
   return (
     <>

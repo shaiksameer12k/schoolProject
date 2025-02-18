@@ -1,163 +1,229 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Button, Row, Col, Typography } from "antd";
 import { CameraOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import Title from "antd/es/skeleton/Title";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
+import { useApiCalls } from "../../../api/apiCalls";
 
 // OMR Answer Sheet Component
-const OMRAnswerSheet = () => {
-  // Dummy questions with options A, B, C, D
-  const questions = [
-    {
-      question: "What is the capital of France?",
-      options: ["Paris", "Berlin", "Madrid", "Rome"],
-    },
-    {
-      question: "Which programming language is used for web development?",
-      options: ["Python", "JavaScript", "Java", "C++"],
-    },
-    {
-      question: "Who discovered gravity?",
-      options: ["Albert Einstein", "Isaac Newton", "Galileo", "Nikola Tesla"],
-    },
-    {
-      question: "Which planet is known as the Red Planet?",
-      options: ["Venus", "Mars", "Earth", "Jupiter"],
-    },
-    {
-      question: "What is the largest ocean on Earth?",
-      options: [
-        "Atlantic Ocean",
-        "Indian Ocean",
-        "Southern Ocean",
-        "Pacific Ocean",
-      ],
-    },
-    {
-      question: "What is the square root of 64?",
-      options: ["6", "8", "10", "12"],
-    },
-    {
-      question: "Which element has the chemical symbol 'O'?",
-      options: ["Oxygen", "Osmium", "Ozone", "Oganesson"],
-    },
-    {
-      question: "Which country is known as the Land of the Rising Sun?",
-      options: ["China", "Japan", "South Korea", "Thailand"],
-    },
-    {
-      question: "Who is known as the father of modern physics?",
-      options: [
-        "Albert Einstein",
-        "Isaac Newton",
-        "Niels Bohr",
-        "Richard Feynman",
-      ],
-    },
-    {
-      question: "Which is the tallest mountain in the world?",
-      options: ["Mount Kilimanjaro", "Mount Everest", "K2", "Mount Fuji"],
-    },
-  ];
+const OMRAnswerSheet = ({ questionsWithOptions, subjectId, studentId }) => {
+  console.log("questionsWithOptions", questionsWithOptions);
+  let { ApiCalls, loadingStates } = useApiCalls();
+  const [studentSubData, setStudentSubData] = useState([]);
+  let navigate = useNavigate()
+
+  const onChangeHandel = (e, questionId, optionId) => {
+    let { name, value, checked } = e.target;
+    console.log("onChangeHandel", e, name, value, checked);
+    let obj = {
+      Qid: questionId,
+      OptionId: optionId,
+      SubjectId: subjectId,
+      StudentId: studentId,
+    };
+
+    let updateArr = studentSubData.some((item) => item.Qid === questionId)
+      ? studentSubData.map((item) =>
+          item.Qid === questionId ? { ...item, OptionId: optionId } : item
+        )
+      : [...studentSubData, obj];
+
+    setStudentSubData(updateArr);
+  };
+
+  const submitAssessment = async () => {
+    loadingStates.submitAssessment = false;
+    try {
+      let params = JSON.stringify(studentSubData);
+      let result = await ApiCalls(
+        "submitAssessment",
+        "post",
+        "Student/AnswerSubmit",
+        params
+      );
+      console.log("submitAssessment", result);
+
+      if(result){
+        navigate("/StudentLayout")
+      }
+
+      loadingStates.submitAssessment = false;
+    } catch (error) {
+      console.log(`Error Student/AnswerSubmit : ${error}`);
+    } finally {
+      loadingStates.submitAssessment = false;
+    }
+  };
+
+  console.log("studentSubData", studentSubData);
 
   return (
-    <div className="mt-10">
-      <Typography.Title level={3}>OMR Answer Sheet</Typography.Title>
-      <div className="flex flex-col space-y-5">
-        {questions.map((item, index) => (
-          <div key={index} className="flex flex-col">
-            <p className="font-semibold">{`Q${index + 1}: ${item.question}`}</p>
-            <div className="flex space-x-4">
-              {item.options.map((option, optionIndex) => (
-                <div key={optionIndex} className="flex items-center">
-                  <input
-                    type="radio"
-                    id={`question${index + 1}-option${optionIndex}`}
-                    name={`question${index + 1}`}
-                    value={option}
-                    className="mr-2"
-                  />
-                  <label
-                    htmlFor={`question${index + 1}-option${optionIndex}`}
-                    className="text-lg xs:text-sm my-1"
-                  >
-                    {option}
-                  </label>
-                </div>
-              ))}
+    <div>
+      <div className="bg-white my-2 p-1 rounded-md">
+        <Typography.Title level={3} style={{ margin: 0 }}>
+          OMR Answer Sheet
+        </Typography.Title>
+      </div>
+      <div className="custom-scrollbar-container py-2 max-h-96  overflow-y-auto bg-white rounded-lg  ">
+        <div className="flex flex-col space-y-5">
+          {questionsWithOptions.map((item, index) => (
+            <div key={item?.Qid} className="flex flex-col">
+              <p className="font-semibold">{`Q${index + 1}: ${
+                item.Question
+              }`}</p>
+              <div className="flex space-x-4">
+                {item.Options.map((option, optionIndex) => (
+                  <div key={option?.OptionId} className="flex items-center">
+                    <input
+                      type="radio"
+                      id={`question${option?.QId}-option${option?.OptionId}`}
+                      name={`question${option?.QId}`}
+                      value={option?.value}
+                      className="mr-2"
+                      onChange={(e) =>
+                        onChangeHandel(e, item?.Qid, option?.OptionId)
+                      }
+                    />
+                    <label
+                      htmlFor={`question${option?.QId}-option${option?.OptionId}`}
+                      className="text-lg xs:text-sm my-1"
+                    >
+                      {option?.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+      {/* Action Buttons */}
+      <div className=" my-2 flex justify-end space-x-4">
+        <Button
+          type="primary"
+          size="large"
+          onClick={submitAssessment}
+          loading={loadingStates.submitAssessment}
+        >
+          Submit Answers
+        </Button>
       </div>
     </div>
   );
 };
 
 const IndudalStudentData = () => {
-  const [image, setImage] = useState("https://via.placeholder.com/150");
-  const [studentInfo, setStudentInfo] = useState({
-    name: "John Doe",
-    studentId: "12345",
-    age: 20,
-    grade: "A",
-  });
-  let navegate = useNavigate();
+  let { ApiCalls, loadingStates } = useApiCalls();
+  let loginStudentData = JSON.parse(localStorage.getItem("loginUserData"));
+  let { subjectId, studentId } = useParams();
+
+  const [studentInfo, setStudentInfo] = useState({});
+  const [questionsWithOptions, setQuestionsWithOptions] = useState([]);
+
+  const fetchQuestions = async () => {
+    loadingStates.fetchQuestions = true;
+
+    try {
+      let params = JSON.stringify([]);
+
+      let result = await ApiCalls(
+        "fetchQuestions",
+        "post",
+
+        `Student/getSubjectQuetionswithoptions?SubjectId=${subjectId}&Studentid=${studentId}`,
+        params
+      );
+
+      console.log("fetchQuestions", result);
+      if (result) {
+        setStudentInfo(result[0]?.StudentInfo[0]);
+        setQuestionsWithOptions(result[0]?.QustionsWithOptionss);
+      }
+      return result; // return the result from the API
+    } catch (error) {
+      console.log(`while fetchQuestions ${error}`);
+    } finally {
+      loadingStates.fetchQuestions = false;
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-4xl p-8 xs:p-0">
-        {/* Profile Card */}
-        <Card
-          className="w-full max-w-4xl flex flex-row items-center rounded-lg"
-          cover={
+      <div className="w-full max-w-6xl p-8 xs:p-0">
+        <Row className="bg-white p-2 rounded-md min-h-36">
+          <Col xs={24} sm={4} md={4} lg={4}>
             <img
               alt="student-avatar"
-              src="https://via.placeholder.com/150" // Your image URL here
-              className="w-48 h-48 object-cover"
+              src={`data:image/png;base64,${studentInfo?.Photo}`} // Your base64 image data here
+              className="w-full h-full"
               style={{ borderRadius: "0.5rem" }}
             />
-          }
-        >
-          {/* Right side content (student data) */}
-          <div className="ml-5">
-            {/* Basic Information */}
-            <div className="mt-4 space-y-2">
-              <div>
-                <strong>Name:</strong> Test
-              </div>
-              <div>
-                <strong>Email:</strong> test@example.com
-              </div>
-              <div>
-                <strong>Age:</strong> 22
-              </div>
-              <div>
-                <strong>Course:</strong> Computer Science
-              </div>
-              <div>
-                <strong>Year:</strong> 3rd Year
-              </div>
-            </div>
-          </div>
-        </Card>
+          </Col>
+          <Col xs={24} sm={20} md={20} lg={20} className=" flex items-center ">
+            <Row gutter={[16, 16]}>
+              {/* First Row */}
+              <Col span={8}>
+                <div>
+                  <strong>Name:</strong> {studentInfo?.StudentName}
+                </div>
+              </Col>
+              <Col span={8}>
+                <div>
+                  <strong>Email:</strong> {studentInfo?.Email}
+                </div>
+              </Col>
+
+              {/* Second Row */}
+              <Col span={8}>
+                <div>
+                  <strong>Date Of Birth:</strong>{" "}
+                  {moment(studentInfo?.Dob).format("DD-MMM-YYYY")}
+                </div>
+              </Col>
+              <Col span={8}>
+                <div>
+                  <strong>Course:</strong> {studentInfo?.SubjectName}
+                </div>
+              </Col>
+
+              <Col span={8}>
+                <div>
+                  <strong>Semester:</strong> {studentInfo?.Sem}
+                </div>
+              </Col>
+              <Col span={8}>
+                <div>
+                  <strong>Course:</strong> {studentInfo?.Course}
+                </div>
+              </Col>
+              <Col span={8}>
+                <div>
+                  <strong>Mobile No:</strong> {studentInfo?.MobileNo}
+                </div>
+              </Col>
+              <Col span={8}>
+                <div>
+                  <strong>Register number:</strong> {studentInfo?.Reg_number}
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        {/* Right side content (student data) */}
 
         {/* OMR Answer Sheet Section */}
-        <OMRAnswerSheet />
-
-        {/* Action Buttons */}
-        <div className="mt-10 flex justify-end space-x-4">
-          {/* <Button
-            type="default"
-            size="large"
-            onClick={() => navegate(`/layout/studentsList`)}
-          >
-            Back
-          </Button> */}
-          <Button type="primary" size="large">
-            Submit Answers
-          </Button>
-        </div>
+        <OMRAnswerSheet
+          questionsWithOptions={questionsWithOptions}
+          subjectId={subjectId}
+          studentId={studentId}
+        />
       </div>
     </div>
   );

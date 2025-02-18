@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomCard from "../../../reusable/Card/CustomCard";
-import { Col, Divider, Grid, Row, Typography } from "antd";
+import { Col, Divider, Grid, Row, Table, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../../reusable/Button/ButtonComponent";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
@@ -158,7 +158,14 @@ const Uploads = () => {
   ) => {
     setIsAddNewQuestionModel(true);
     setIsApplicationType(isApplicationType);
-    let { Options, Qid, Question } = data;
+    let { Options, Qid, Question, CurrectOption } = data;
+
+    let correctOptionsData = Options.map((data) => ({
+      label: data.label,
+      value: data.value,
+    }));
+
+    console.log("correctOptionsData", correctOptionsData);
 
     let updatedFields = adminOMRQuestionsAndAnswersUploadForm
       .filter(
@@ -170,10 +177,17 @@ const Uploads = () => {
       .map((item) =>
         item.name === "Question"
           ? { ...item, value: Question, Qid: Qid }
-          : item.name.includes("Option")
+          : item.name.startsWith("Option")
           ? {
               ...item,
               value: Options.find((opt) => opt.name === item.name)?.value || "",
+              Qid: Qid,
+            }
+          : item.name == "CorrectOption"
+          ? {
+              ...item,
+              options: correctOptionsData,
+              value: CurrectOption,
               Qid: Qid,
             }
           : { ...item, Qid: Qid }
@@ -181,7 +195,7 @@ const Uploads = () => {
 
     setEditFormFieldsData(updatedFields);
 
-    console.log("updatedFields", updatedFields, addNewFormFieldsData);
+    console.log("updatedFields", updatedFields, addNewFormFieldsData, Options);
     console.log("openEditQuestionModelHandel", data);
   };
 
@@ -424,7 +438,6 @@ const Uploads = () => {
 
   console.log("questionsList", questionsList);
 
-  
   // addNewForm
   const addNewFormHandleChange = async (
     e,
@@ -536,7 +549,7 @@ const Uploads = () => {
       );
       if (result) {
         setIsAddNewQuestionModel(false);
-        fetchQuestions()
+        fetchQuestions();
       }
       console.log("addNewQuestionHandleSubmit", result);
       return;
@@ -545,6 +558,18 @@ const Uploads = () => {
     } finally {
       loadingStates.addNewQuestionHandleSubmit = false;
     }
+  };
+
+  // add course and sem
+
+  const [isOpenAddNewCourseAndSemester, setIsOpenAddNewCourseAndSemester] =
+    useState(false);
+
+  const openNewCourseAndSemesterModel = () => {
+    setIsOpenAddNewCourseAndSemester(true);
+  };
+  const closeNewCourseAndSemesterModel = () => {
+    setIsOpenAddNewCourseAndSemester(false);
   };
 
   return (
@@ -567,6 +592,13 @@ const Uploads = () => {
             icon="FaCloudUploadAlt"
             onClick={fetchQuestions}
             loading={loadingStates?.fetchQuestions}
+          />
+          <ButtonComponent
+            name="Add Course / Semester"
+            size="middle"
+            btnStyle={{ width: "auto" }}
+            icon="IoMdAdd"
+            onClick={() => openNewCourseAndSemesterModel("insert")}
           />
           <ButtonComponent
             name="Add New Questions"
@@ -642,6 +674,52 @@ const Uploads = () => {
         handleCancel={closeAddNewQuestion}
         handleOk={addNewQuestionHandleSubmit}
         okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
+      />
+
+      <ModalComponent
+        title={"Add New Course Or Semester Questions"}
+        isModalOpen={isOpenAddNewCourseAndSemester}
+        content={
+          <div>
+            <Table
+              columns={[
+                {
+                  title: "Course Name",
+                  dataIndex: "courseName",
+                  key: "courseName",
+                },
+                {
+                  title: "Semesters",
+                  dataIndex: "semester",
+                  key: "semester",
+                  children: Array.from({ length: 10 }, (_, i) => ({
+                    title: i + 1,
+                    dataIndex: i + 1,
+                    key: i + 1,
+                  })),
+                },
+                {
+                  title: "Action",
+                  dataIndex: "Action",
+                  key: "action",
+                },
+              ]}
+              dataSource={[
+                {
+                  key: 1,
+                  courseName: "BS.c",
+                   
+                  action: "Edit",
+                },
+              ]}
+            />
+          </div>
+        }
+        okText={isApplicationType == "insert" ? "Submit" : "Update"}
+        handleCancel={closeNewCourseAndSemesterModel}
+        handleOk={addNewQuestionHandleSubmit}
+        okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
+        width="auto"
       />
     </div>
   );

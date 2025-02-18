@@ -59,8 +59,9 @@ const UserLoginComponent = () => {
       console.log("handleSubmit", result);
 
       if (result[0]?.Status > 0) {
-        let { Message, data } = result[0];
+        let { Message, data , MenulistsStudent } = result[0];
         localStorage.setItem("loginUserData", JSON.stringify(data));
+        localStorage.setItem("Menulists", JSON.stringify(MenulistsStudent));
         navigate("/StudentLayout");
         return message.success(Message);
       }

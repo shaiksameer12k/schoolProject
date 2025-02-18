@@ -22,7 +22,7 @@ const CustomCard = ({
         cursor: "pointer",
       }}
       onClick={() => onClickHandel(cardId, cardsData)}
-      className="shadow-lg"
+      className="hover:shadow-lg hover:scale-105 transition-all  duration-1000 "
     >
       <Row gutter={16} className="relative w-full">
         <div className="absolute flex justify-center items-center opacity-20 rotate-45">
@@ -42,15 +42,21 @@ const CustomCard = ({
           <div>
             <h3
               className={
-                cardName == selectedData
+                cardColor !== "#ffffff"
                   ? "text-xl font-bold text-white"
-                  : "text-xl font-bold text-black"
+                  : "text-xl font-bold text-gray-500 "
               }
             >
-              {cardName}
+              {cardName.length > 15 ? `${cardName.slice(0, 15)}...` : cardName}
             </h3>
             {totalCount && (
-              <span className="text-sm font-semibold">
+              <span
+                className={
+                  cardColor !== "#ffffff"
+                    ? "text-sm font-semibold text-white"
+                    : "text-sm font-semibold text-gray-400 "
+                }
+              >
                 Qns : {complitedCount}/{totalCount}
               </span>
             )}

@@ -15,11 +15,8 @@ import UserSubjectList from "./components/Main/pages/UserSubjectList";
 import UserLoginComponent from "./components/LoginPage/UserLoginComponent";
 import Uploads from "./components/Main/pages/Uploads";
 
-
 const Router = () => {
   let isAdimn = true;
-
-
 
   return (
     <Routes>
@@ -42,13 +39,13 @@ const Router = () => {
 
       <Route path="/StudentLayout" element={<Layout isAdimn={false} />}>
         <Route index element={<UserSubjectList />} />
-        <Route path="userLogin" element={<UserSubjectList />} />
+        <Route path="studentDashboard" element={<UserSubjectList />} />
         <Route
-          path="userLogin/:subjectName"
+          path="studentDashboard/:subjectId"
           element={<UserStartAssessment />}
         />
         <Route
-          path="userLogin/:subjectName/:studentId"
+          path="studentDashboard/:subjectId/:studentId"
           element={<IndudalStudentData />}
         />
       </Route>

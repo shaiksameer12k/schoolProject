@@ -14,6 +14,10 @@ const Header = ({ scrollY, isAdimn }) => {
   let loc = useLocation();
   let pathName = loc?.pathname;
 
+  let Menulists = JSON.parse(localStorage.getItem("Menulists"));
+
+  console.log("Menulists",Menulists)
+
   const [openDrawer, setOpenDrawer] = useState(true);
   const showDrawer = () => {
     setOpenDrawer(true);
@@ -79,70 +83,25 @@ const Header = ({ scrollY, isAdimn }) => {
         )}
 
         <ul className="flex gap-4 items-center" id="lg_menu">
-          {/* <li>
-            <div
-              className={
-                pathName.includes("cart")
-                  ? "w-9 h-9 bg-customActiveBgColor rounded-full flex justify-center items-center"
-                  : "flex justify-center items-center"
-              }
-            >
-              <Badge color="orange" count={1} size="small">
-                <DynamicIcon
-                  iconName="FaCartShopping"
-                  color="#ff1f59c4"
-                  onClickHandel={() => navegate("/cart")}
-                  size={22}
-                  iconTooltipTitle="Cart"
-                />
-              </Badge>
-            </div>
-          </li>
-          <li>
-            <div
-              className={
-                pathName.includes("notification")
-                  ? "w-9 h-9 bg-customActiveBgColor rounded-full flex justify-center items-center"
-                  : "flex justify-center items-center"
-              }
-            >
-              <Badge color="orange" count={1} size="small">
-                <DynamicIcon
-                  iconName="IoNotifications"
-                  color="#ff1f59c4"
-                  size={22}
-                  onClickHandel={() => navegate("/notification")}
-                  iconTooltipTitle="Notification"
-                />
-              </Badge>
-            </div>
-          </li> */}
           <li>
             <div>
-              {/* <DynamicIcon
-                iconName="FaUser"
-                color="#ff1f59c4"
-                size={20}
-                // onClickHandel={}
-                iconTooltipTitle="User Details"
-              /> */}
               <UserMenu isAdimn={isAdimn} />
             </div>
           </li>
         </ul>
 
         {/* <div id="sm_menu" className="flex items-center"> */}
-          <DynamicIcon
-            iconName="MdMenuOpen"
-            size={30}
-            onClickHandel={showDrawer}
-          />
+        <DynamicIcon
+          iconName="MdMenuOpen"
+          size={30}
+          onClickHandel={showDrawer}
+        />
         {/* </div> */}
 
         <MenuDrawer
           drawerState={openDrawer}
           onClose={onClose}
-          menuList={menuData}
+          menuList={Menulists}
           isAdimn={isAdimn}
         />
       </nav>

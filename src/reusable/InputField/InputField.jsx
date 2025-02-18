@@ -21,7 +21,7 @@
 //     type,
 //     placeholder,
 //     isMandatory,
-//     idDisabled,
+//     isDisabled,
 //     isFieldVisible,
 //     style,
 //     wrapperCol,
@@ -55,7 +55,7 @@
 //           name={name}
 //           onChange={onChange}
 //           checked={value}
-//           disabled={idDisabled}
+//           disabled={isDisabled}
 //         >
 //           <span className="mandatory">*</span>
 //           {label}
@@ -71,16 +71,16 @@
 //           /> */}
 //           <Radio.Group name="radio-group" onChange={onChange} value={1}>
 //             {options?.map((item) => (
-//               <Radio value={item?.value} disabled={idDisabled}>
+//               <Radio value={item?.value} disabled={isDisabled}>
 //                 {item?.label}
 //               </Radio>
 //             ))}
 //           </Radio.Group>
 //         </>
 //       ) : type == "date" ? (
-//         <DatePicker name={name} onChange={onChange} disabled={idDisabled} />
+//         <DatePicker name={name} onChange={onChange} disabled={isDisabled} />
 //       ) : type == "dateTime" ? (
-//         <RangePicker name={name} onChange={onChange} disabled={idDisabled} />
+//         <RangePicker name={name} onChange={onChange} disabled={isDisabled} />
 //       ) : type == "file" ? (
 //         <FileUpload />
 //       ) : type == "select" ? (
@@ -94,7 +94,7 @@
 //           value={value}
 //           name={name}
 //           allowClear
-//           disabled={idDisabled}
+//           disabled={isDisabled}
 //         />
 //       ) : (
 //         <>
@@ -104,7 +104,7 @@
 //             type={type}
 //             name={name}
 //             style={style}
-//             disabled={idDisabled}
+//             disabled={isDisabled}
 //             allowClear
 //             onChange={onChange}
 //             count={{
@@ -152,7 +152,7 @@ const InputField = ({
 
   placeholder,
   isMandatory,
-  idDisabled,
+  isDisabled,
   isFieldVisible,
   style,
   wrapperCol,
@@ -185,7 +185,7 @@ const InputField = ({
             name={name}
             onChange={onChange}
             checked={value}
-            disabled={idDisabled}
+            disabled={isDisabled}
           >
             {isMandatory && <span className="mandatory">*</span>}
             {label}
@@ -197,13 +197,13 @@ const InputField = ({
             name={name}
             onChange={onChange}
             value={value}
-            disabled={idDisabled}
+            disabled={isDisabled}
           >
             {options?.map((item) => (
               <Radio
                 key={item?.value}
                 value={item?.value}
-                disabled={idDisabled}
+                disabled={isDisabled}
               >
                 {item?.label}
               </Radio>
@@ -232,8 +232,9 @@ const InputField = ({
               );
             }}
             value={value ? moment(value) : ""}
-            disabled={idDisabled}
+            disabled={isDisabled}
             style={style}
+            placeholder={placeholder}
           />
         );
       case "dateTime":
@@ -259,7 +260,7 @@ const InputField = ({
                 field
               );
             }}
-            disabled={idDisabled}
+            disabled={isDisabled}
             style={style}
           />
         );
@@ -362,7 +363,7 @@ const InputField = ({
               value={!value ? null : value}
               name={name}
               allowClear
-              disabled={idDisabled}
+              disabled={isDisabled}
               size={size}
               style={{ width: "100%" }}
             />
@@ -376,7 +377,7 @@ const InputField = ({
             type={type}
             name={name}
             style={style}
-            disabled={idDisabled}
+            disabled={isDisabled}
             allowClear
             onChange={onChange}
             maxLength={maxLength}
