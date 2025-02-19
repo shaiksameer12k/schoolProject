@@ -3,7 +3,7 @@ import { Button, Divider, Drawer, Menu, Radio, Space } from "antd";
 import { items } from "../../../data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
-const MenuDrawer = ({ drawerState = false, onClose, menuList }) => {
+const MenuDrawer = ({ drawerState = false, onClose, menuList , isAdimn }) => {
   // hooks
   let loc = useLocation();
   let navigate = useNavigate();
@@ -40,8 +40,7 @@ const MenuDrawer = ({ drawerState = false, onClose, menuList }) => {
     setModifiedItems(modifiedMenuData);
   }, [menuList]);
 
-
-  console.log("modifiedItems",modifiedItems , menuList)
+  console.log("modifiedItems", modifiedItems, menuList);
 
   return (
     <>
@@ -61,7 +60,9 @@ const MenuDrawer = ({ drawerState = false, onClose, menuList }) => {
           <div
             style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
             className="ant-menu-item py-3"
-            onClick={() => navigate("/")}
+            onClick={() =>
+              navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
+            }
           >
             <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
             <span className="ant-menu-title-content">Log Out</span>

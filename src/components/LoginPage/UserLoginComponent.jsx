@@ -179,6 +179,7 @@ const UserLoginComponent = () => {
                 onClick={handleSubmit}
                 size="large"
                 btnStyle={{ width: "100%" }}
+                loading={loadingStates?.handleSubmit}
               />
             </div>
 
