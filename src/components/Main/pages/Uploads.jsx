@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomCard from "../../../reusable/Card/CustomCard";
-import { Col, Divider, Grid, Row, Table, Typography } from "antd";
+import { Col, Divider, Grid, message, Row, Table, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../../reusable/Button/ButtonComponent";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
@@ -13,7 +13,11 @@ import {
 } from "../../../data/formData";
 import FormLayout from "../../../reusable/FormLayout/FormLayout";
 import { useApiCalls } from "../../../api/apiCalls";
-import { centrliseFieldsValidation } from "../../../utils/feildValidation";
+import {
+  centrliseFieldsValidation,
+  fileToBase64,
+} from "../../../utils/feildValidation";
+import { dataToExcelExport } from "../../../utils/constant";
 const { useBreakpoint } = Grid;
 
 const OMRAnswerSheet = ({
@@ -561,7 +565,6 @@ const Uploads = () => {
   };
 
   // add course and sem
-
   const [isOpenAddNewCourseAndSemester, setIsOpenAddNewCourseAndSemester] =
     useState(false);
 
@@ -571,6 +574,117 @@ const Uploads = () => {
   const closeNewCourseAndSemesterModel = () => {
     setIsOpenAddNewCourseAndSemester(false);
   };
+
+  // fetch getimportlist
+  const [categoryImportList, setCategoryImportList] = useState([]);
+  const [selectedBulkId, setSelectedBulkId] = useState("");
+  const [selectedFile, setSelectedFile] = useState({});
+
+  const getImportListData = async () => {
+    loadingStates.getImportListData = true;
+    try {
+      let params = JSON.stringify([]);
+      let result = await ApiCalls(
+        "getImportListData",
+        "post",
+        `Admin/getImportList?UpdatedBy=${loginUserData[0]?.UserId}`,
+        params
+      );
+
+      console.log("getImportListData", result);
+
+      if (result) {
+        let convertOpt = result.map((item) => ({
+          label: item?.Category,
+          value: item?.BulkId,
+          spName: item?.sp_Name,
+        }));
+        setCategoryImportList(convertOpt);
+      }
+    } catch (error) {
+      console.log(`getImportListData ${error}`);
+    } finally {
+      loadingStates.getImportListData = false;
+    }
+  };
+  const fetchExcelTemplate = async () => {
+    loadingStates.fetchExcelTemplate = true;
+    try {
+      let params = JSON.stringify([]);
+      let result = await ApiCalls(
+        "fetchExcelTemplate",
+        "post",
+        `Admin/getExcelTemplate?UpdatedBy=${loginUserData[0]?.UserId}&Bulkid=${selectedBulkId}`,
+        params
+      );
+
+      console.log("fetchExcelTemplate", result);
+
+      if (result) {
+        let data = result.reduce((acc, cur) => {
+          return { ...acc, [cur?.headerName]: "" };
+        }, {});
+        console.log("data", data);
+        return dataToExcelExport([data], "test.xls");
+      }
+    } catch (error) {
+      console.log(`fetchExcelTemplate ${error}`);
+    } finally {
+      loadingStates.fetchExcelTemplate = false;
+    }
+  };
+
+  const onChangeHandel = async (e) => {
+    let { name, value, files } = e.target;
+
+    let fileData = await fileToBase64(files[0], name, ["xls", "xlsx"], 2);
+    setSelectedFile(fileData);
+    console.log("onChangeHandel", name, value, files, fileData);
+  };
+
+  const importExcelData = async () => {
+    loadingStates.importExcelData = true;
+
+    if (!selectedBulkId) {
+      return message.error("Please Select Category");
+    }
+    let getSpName = categoryImportList.find(
+      (item) => item?.value == selectedBulkId
+    );
+    console.log("getSpName", categoryImportList, getSpName);
+    try {
+      let params = JSON.stringify([{ files: selectedFile?.base64 }]);
+      let result = await ApiCalls(
+        "importExcelData",
+        "post",
+        `Admin/ImportFromExcel?UpdatedBy=${loginUserData[0]?.UserId}&Bulkid=${selectedBulkId}&SpName=${getSpName?.spName}`,
+        params
+      );
+
+      console.log("importExcelData", result);
+
+      if (result) {
+        setIsUploadModel(false);
+        setSelectedFile({
+          base64: "",
+          base64FileName: "",
+          base64FileSize: "",
+          base64Id: "",
+        });
+        setSelectedBulkId("");
+      }
+    } catch (error) {
+      console.log(`importExcelData ${error}`);
+    } finally {
+      loadingStates.importExcelData = false;
+    }
+  };
+
+  useEffect(() => {
+    getImportListData();
+  }, []);
+
+  console.log("selectedBulkId", selectedBulkId);
 
   return (
     <div>
@@ -641,13 +755,60 @@ const Uploads = () => {
         title="Bulk Upload"
         isModalOpen={isUploadModel}
         content={
-          <div className="flex justify-center items-center">
-            <FileUpload />
+          <div>
+            <div className=" border-b-2 border-t-0  pb-3 ">
+              <Row align="middle" gutter={[16, 16]}>
+                <Col xs={24} sm={24} md={24} lg={16}>
+                  <InputField
+                    type="select"
+                    placeholder="Please Select Catagory"
+                    options={categoryImportList}
+                    isFieldVisible={true}
+                    isError={""}
+                    value={selectedBulkId}
+                    onChange={(e) => setSelectedBulkId(e.target.value)}
+                  />
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={8}>
+                  <ButtonComponent
+                    name="Fetch Excel Template"
+                    onClick={fetchExcelTemplate}
+                    loading={loadingStates?.fetchExcelTemplate}
+                    disabled={selectedBulkId > 0 ? false : true}
+                  />
+                </Col>
+              </Row>
+            </div>
+            <div>
+              <Row align="middle" gutter={[16, 16]}>
+                <Col xs={24} sm={24} md={24} lg={24}>
+                  <InputField
+                    type="file"
+                    options={[]}
+                    isFieldVisible={true}
+                    isError=""
+                    name={"test"}
+                    value={selectedFile?.base64FileName}
+                    onChange={onChangeHandel}
+                    removeSelectedFileHandel={() =>
+                      setSelectedFile({
+                        base64: "",
+                        base64FileName: "",
+                        base64FileSize: "",
+                        base64Id: "",
+                      })
+                    }
+                  />
+                </Col>
+              </Row>
+            </div>
           </div>
         }
-        okText="Submit"
+        okText={loadingStates?.importExcelData ? "Loading..." : "Submit"}
         handleCancel={closeModelHandel}
+        handleOk={loadingStates?.importExcelData ? () => {} : importExcelData}
         okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
+        modelLoading={loadingStates?.importExcelData}
       />
 
       <ModalComponent
@@ -708,7 +869,7 @@ const Uploads = () => {
                 {
                   key: 1,
                   courseName: "BS.c",
-                   
+
                   action: "Edit",
                 },
               ]}

@@ -210,7 +210,6 @@ export const openPdfInNewTab = (fileType, base64) => {
 export const dataToExcelExport = async (
   data,
   fileName,
-
   xlHeadersData = { isHeadersRequred: false, headersArray: [] }
 ) => {
   console.log("dataToExcelExport", data, fileName);
@@ -319,4 +318,3 @@ export const dataToExcelExport = async (
   a.click();
   window.URL.revokeObjectURL(url);
 };
-

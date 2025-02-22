@@ -12,6 +12,7 @@ const ModalComponent = ({
   cancelText,
   okButtonProps,
   cancelButtonProps,
+  modelLoading,
   ...rest
 }) => {
   return (
@@ -25,7 +26,6 @@ const ModalComponent = ({
       okButtonProps={okButtonProps}
       cancelButtonProps={cancelButtonProps}
       {...rest} // Spread the rest of the props for additional customization
-      
     >
       {content}
     </Modal>

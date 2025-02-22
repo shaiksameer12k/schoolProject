@@ -268,10 +268,10 @@ const InputField = ({
         return (
           <>
             <div className="mt-1">
-              {data.length > 0 || value.length > 0 ? (
-                data.length > 0 ? (
+              {data?.length > 0 || value?.length > 0 ? (
+                data?.length > 0 ? (
                   <div className="flex gap-2">
-                    {data.map((file) => (
+                    {data?.map((file) => (
                       <div className="flex">
                         <span className="text-linkColor text-xs">
                           {file?.base64FileName}
@@ -414,7 +414,7 @@ const InputField = ({
       layout={layout}
       hasFeedback={hasFeedback}
       validateStatus={
-        value?.length > 0 || !value ? (isError.length === 0 ? "" : "error") : ""
+        value?.length > 0 || !value ? (isError?.length === 0 ? "" : "error") : ""
       }
       help={isError}
       hidden={!isFieldVisible}
