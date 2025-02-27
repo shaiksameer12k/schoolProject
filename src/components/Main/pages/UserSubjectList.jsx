@@ -49,7 +49,7 @@ const UserSubjectList = () => {
     <div>
       <Row gutter={[8, 8]}>
         <Col xs={24} sm={12} md={12} lg={12} className="border">
-          <BarChart />
+          <BarChart cardsData={cardsData} />
         </Col>
 
         <Col xs={24} sm={12} md={12} lg={12} className="border">
@@ -65,6 +65,7 @@ const UserSubjectList = () => {
                   complitedCount={card?.complitedCount}
                   onClickHandel={onClickHandel}
                   cardId={card?.cardId}
+                  isDisabled={card?.isDisable}
                 />
               </Col>
             ))}

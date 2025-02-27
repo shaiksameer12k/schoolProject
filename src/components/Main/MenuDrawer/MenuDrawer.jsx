@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Drawer, Menu, Radio, Space } from "antd";
+import { Button, Divider, Drawer, Grid, Menu, Radio, Space } from "antd";
 import { items } from "../../../data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
-const MenuDrawer = ({ drawerState = false, onClose, menuList , isAdimn }) => {
+const MenuDrawer = ({ drawerState = false, onClose, menuList, isAdimn }) => {
   // hooks
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+  let { xs } = screens;
   let loc = useLocation();
   let navigate = useNavigate();
   let pathName = loc?.pathname;
@@ -40,7 +43,7 @@ const MenuDrawer = ({ drawerState = false, onClose, menuList , isAdimn }) => {
     setModifiedItems(modifiedMenuData);
   }, [menuList]);
 
-  console.log("modifiedItems", modifiedItems, menuList);
+  console.log("screens", modifiedItems, menuList, screens);
 
   return (
     <>
@@ -52,7 +55,7 @@ const MenuDrawer = ({ drawerState = false, onClose, menuList , isAdimn }) => {
         open={drawerState}
         key={"left"}
         style={{
-          width: "20%",
+          width: xs ? "60%" : "20%",
           padding: "15px 0px 0px 0px",
           background: "#2c1944",
         }}

@@ -12,16 +12,17 @@ const CustomCard = ({
   selectedData,
   cardId,
   cardsData,
+  isDisabled,
 }) => {
   return (
     <Card
       style={{
         // width: 200,
-        background: cardColor,
+        background: isDisabled ? "#c3c3c3" : cardColor,
         color: "#ffffff",
-        cursor: "pointer",
+        cursor: isDisabled ? "not-allowed" : "pointer",
       }}
-      onClick={() => onClickHandel(cardId, cardsData)}
+      onClick={isDisabled ? () => {} : () => onClickHandel(cardId, cardsData)}
       className="hover:shadow-lg hover:scale-105 transition-all  duration-1000 "
     >
       <Row gutter={16} className="relative w-full">

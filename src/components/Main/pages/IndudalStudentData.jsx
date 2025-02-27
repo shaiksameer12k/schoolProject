@@ -90,7 +90,7 @@ const OMRAnswerSheet = ({ questionsWithOptions, subjectId, studentId }) => {
                       htmlFor={`question${option?.QId}-option${option?.OptionId}`}
                       className="text-lg xs:text-sm my-1"
                     >
-                      {option?.label}
+                      {option?.value}
                     </label>
                   </div>
                 ))}

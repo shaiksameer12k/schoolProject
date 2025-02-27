@@ -5,6 +5,8 @@ import ExcelJS from "exceljs";
 
 import { generateToken } from "../api/generateToken";
 import { useApiCalls } from "../api/apiCalls";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export const icon_size = 23;
 export const env = import.meta.env;
@@ -317,4 +319,30 @@ export const dataToExcelExport = async (
   a.download = `${fileName}.xlsx`; // Set the downloaded file name
   a.click();
   window.URL.revokeObjectURL(url);
+};
+
+// convert design to pdf
+
+export const handleDownload = (elementId) => {
+  // Get the marksheet element
+  const marksheetElement = document.getElementById(elementId);
+
+  marksheetElement.style.padding = "20px";
+
+  // Use html2canvas to capture the marksheet as an image
+  html2canvas(marksheetElement, { scale: 2 }).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png"); // Convert canvas to image data URL
+
+    // Create a new PDF
+    const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
+
+    // Add the image to the PDF
+    const imgWidth = 210; // A4 width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+    // Save the PDF
+    pdf.save("marksheet.pdf");
+    marksheetElement.style.padding = "0px";
+  });
 };

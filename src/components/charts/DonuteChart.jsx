@@ -1,50 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
 
-import { Pie } from "@ant-design/plots";
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DemoBar = ({ data, type }) => {
-  const config = {
-    data: data,
-    angleField: "value",
-    colorField: "type",
-    innerRadius: 0.6,
-    label: {
-      text: "value",
-      style: {
-        fontWeight: "bold",
-      },
-    },
-    legend: {
-      color: {
-        title: true,
-        position: "bottom",
-        rowPadding: 5,
-      },
-    },
-    annotations: [
+export default function DonuteChart({ data }) {
+  const [dataValue, setDataValue] = useState([]);
+  const [labelValue, setLabelValue] = useState([]);
+  const [chartLabel, setChartLabel] = useState("");
+
+  useEffect(() => {
+    let tempLabels = [];
+    let tempValues = [];
+
+    data.map((item) => {
+      tempLabels.push(item.type);
+      tempValues.push(item.value);
+    });
+    setLabelValue(tempLabels);
+    setDataValue(tempValues);
+  }, [data]);
+
+  console.log("chartLabel", chartLabel);
+
+  let sendData = {
+    labels: labelValue,
+    datasets: [
       {
-        type: "text",
-        content: "Total: " + "75%",
-        style: {
-          text: "g",
-          x: "50%",
-          y: "50%",
-          textAlign: "center",
-          fontSize: 10,
-          fontStyle: "bold",
-        },
+        label: data[0]?.chartLabel,
+        data: dataValue,
+        backgroundColor: [
+          "#2389ff",
+          "#0dcccc",
+          "#F26599",
+          "#42CB42",
+          "#E8903D",
+        ],
+        borderColor: ["#2389ff", "#0dcccc", "#F26599", "#42CB42", "#E8903D"],
+        borderWidth: 0.5,
       },
     ],
-    tooltip: {
-      title: (d) => d?.type,
-      field: "a",
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          boxWidth: 10,
+          boxHeight: 10,
+        },
+      },
     },
   };
-  return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <Pie {...config} />
-    </div>
-  );
-};
 
-export default DemoBar;
+  return <Doughnut data={sendData} options={options} />;
+}

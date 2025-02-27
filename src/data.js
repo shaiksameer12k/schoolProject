@@ -26,6 +26,12 @@ export const menuData = [
     menu_path: "/layout/uploads",
     route: "uploads",
   },
+  {
+    menu_id: 5,
+    menu_name: "Reports",
+    menu_path: "/layout/reports",
+    route: "routes",
+  },
 ];
 
 export const items = [
@@ -70,4 +76,13 @@ export const items = [
     isVisible: true,
     route: "uploads",
   },
+  {
+    key: "6",
+    label: "Reports",
+    path: "/layout/reports",
+    icon: "FaUpload",
+    isVisible: true,
+    route: "routes",
+  },
+
 ];

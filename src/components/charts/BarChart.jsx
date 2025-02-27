@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -20,20 +20,25 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+const BarChart = ({ cardsData }) => {
+  const [xAxisLabels, setXAxisLabels] = useState([]);
+  const [pendingData, setPendingData] = useState([]);
+  const [submittedData, setSubmittedData] = useState([]);
+
   // Data for the bar chart
+
   const data = {
     datasets: [
       {
         label: "Pending",
-        data: [5, 7, 0], // Data for Pending status
-        backgroundColor: "#FF4500",
+        data: pendingData, // Data for Pending status
+        backgroundColor: "#0dcccc",
       },
 
       {
         label: "Submitted",
-        data: [3, 6, 5], // Data for Approved status
-        backgroundColor: "#32CD32",
+        data: submittedData, // Data for Approved status
+        backgroundColor: "#2389ff",
       },
     ],
   };
@@ -63,11 +68,7 @@ const BarChart = () => {
       },
       x: {
         type: "category",
-        labels: [
-         "Chemestry",
-         "Maths",
-         "Biology"
-        ], // X-axis labels
+        labels: xAxisLabels, // X-axis labels
         ticks: {
           font: {
             size: 12, // Font size for X-axis labels
@@ -83,6 +84,34 @@ const BarChart = () => {
       },
     },
   };
+
+  useEffect(() => {
+    let xAxisLabels = cardsData?.reduce((a, b) => {
+      a.push(b.cardName);
+      return a;
+    }, []);
+
+    let pendingData = [];
+    let submittedData = [];
+
+    let barData = cardsData?.map((sub) => {
+      if (sub.totalCount == sub.complitedCount) {
+        pendingData.push(0);
+        submittedData.push(sub.complitedCount);
+        return;
+      } else if (sub.complitedCount == 0) {
+        pendingData.push(sub.totalCount);
+        submittedData.push(sub.complitedCount);
+      } else {
+        pendingData.push(sub.totalCount - sub.complitedCount);
+        submittedData.push(sub.complitedCount);
+      }
+    });
+
+    setPendingData(pendingData);
+    setSubmittedData(submittedData);
+    setXAxisLabels(xAxisLabels);
+  }, [cardsData]);
 
   return <Bar data={data} options={options} />;
 };

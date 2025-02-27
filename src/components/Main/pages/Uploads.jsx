@@ -10,6 +10,7 @@ import FileUpload from "../../../reusable/FileUpload/FileUpload";
 import {
   adminOMRQuestionsAndAnswersUploadForm,
   adminQuestionsUploadForm,
+  uploadCourseFormData,
 } from "../../../data/formData";
 import FormLayout from "../../../reusable/FormLayout/FormLayout";
 import { useApiCalls } from "../../../api/apiCalls";
@@ -18,6 +19,7 @@ import {
   fileToBase64,
 } from "../../../utils/feildValidation";
 import { dataToExcelExport } from "../../../utils/constant";
+
 const { useBreakpoint } = Grid;
 
 const OMRAnswerSheet = ({
@@ -609,6 +611,10 @@ const Uploads = () => {
   };
   const fetchExcelTemplate = async () => {
     loadingStates.fetchExcelTemplate = true;
+    let selectedBulkLabel = categoryImportList.find(
+      (item) => item.value == selectedBulkId
+    );
+
     try {
       let params = JSON.stringify([]);
       let result = await ApiCalls(
@@ -625,7 +631,7 @@ const Uploads = () => {
           return { ...acc, [cur?.headerName]: "" };
         }, {});
         console.log("data", data);
-        return dataToExcelExport([data], "test.xls");
+        return dataToExcelExport([data], `${selectedBulkLabel?.label}`);
       }
     } catch (error) {
       console.log(`fetchExcelTemplate ${error}`);
@@ -680,9 +686,117 @@ const Uploads = () => {
     }
   };
 
+  // addNewCourseAndSemesterHandleSubmit
+  const [uploadCourseForm, setUploadCourseForm] = useState([]);
+
+  const addNewCourseAndSemesterHandleSubmit = async () => {
+    loadingStates.addNewCourseAndSemesterHandleSubmit = true;
+
+    let paramsData = uploadCourseForm.reduce((acc, curr) => {
+      acc[curr.name] = curr.value;
+      return acc;
+    }, {});
+
+    try {
+      let params = JSON.stringify([
+        {
+          CourseName: paramsData?.courseName,
+          Category: paramsData?.category,
+          semesters: paramsData?.semesters,
+          IsYearly: true,
+          Transaction: "insert",
+          TransactionId: 0,
+        },
+      ]);
+      let result = await ApiCalls(
+        "addNewCourseAndSemesterHandleSubmit",
+        "post",
+        `Admin/AddOrupdateCourse`,
+        params
+      );
+
+      console.log("addNewCourseAndSemesterHandleSubmit", result);
+    } catch (error) {
+      console.log(`addNewCourseAndSemesterHandleSubmit ${error}`);
+    } finally {
+      loadingStates.addNewCourseAndSemesterHandleSubmit = false;
+    }
+  };
+
+  const uploadCourseHandleChange = async (
+    e,
+    fieldsArray,
+    regexType,
+    maxLength,
+    field
+  ) => {
+    const { name, value, type, checked } = e.target;
+
+    // Centrlise Fields Validation
+    let updatedFields = fieldsArray;
+
+    if (field?.isDependentOnOtherColumn) {
+      let data = [];
+      if (field?.DependentColumnName == "Semester") {
+        data = await getSemesterData(value);
+      } else if (field?.DependentColumnName == "Subject") {
+        let Courseid = fieldsArray.find(
+          (item) => item?.name == "Course"
+        )?.value;
+        data = await getSubjectData(Courseid, value);
+      }
+
+      let options = data?.map((data) => ({
+        label:
+          field?.DependentColumnName == "Semester"
+            ? data?.Semesters
+            : field?.DependentColumnName == "Subject"
+            ? data?.SubjectName
+            : data[field?.DependentColumnName],
+        value:
+          field?.DependentColumnName == "Semester"
+            ? String(data?.Semid)
+            : field?.DependentColumnName == "Subject"
+            ? String(data?.subId)
+            : data[field?.DependentColumnName],
+      }));
+
+      console.log("options", options);
+
+      updatedFields = updatedFields.map((item) =>
+        item.name == field?.DependentColumnName
+          ? {
+              ...item,
+              options: options,
+            }
+          : item
+      );
+
+      console.log("updatedFields*", updatedFields);
+    }
+
+    updatedFields = centrliseFieldsValidation(
+      type,
+      name,
+      value,
+      checked,
+      updatedFields,
+      regexType,
+      maxLength
+    );
+
+    setUploadCourseForm(updatedFields);
+    // form.setFieldsValue({ [name]: value });
+    return;
+  };
+
   useEffect(() => {
     getImportListData();
   }, []);
+
+  useEffect(() => {
+    setUploadCourseForm(uploadCourseFormData);
+  }, [isOpenAddNewCourseAndSemester]);
 
   console.log("selectedBulkId", selectedBulkId);
 
@@ -750,7 +864,7 @@ const Uploads = () => {
         openModelHandel={openModelHandel}
         openEditQuestionModelHandel={openEditQuestionModelHandel}
       />
-
+      {}
       <ModalComponent
         title="Bulk Upload"
         isModalOpen={isUploadModel}
@@ -841,46 +955,17 @@ const Uploads = () => {
         title={"Add New Course Or Semester Questions"}
         isModalOpen={isOpenAddNewCourseAndSemester}
         content={
-          <div>
-            <Table
-              columns={[
-                {
-                  title: "Course Name",
-                  dataIndex: "courseName",
-                  key: "courseName",
-                },
-                {
-                  title: "Semesters",
-                  dataIndex: "semester",
-                  key: "semester",
-                  children: Array.from({ length: 10 }, (_, i) => ({
-                    title: i + 1,
-                    dataIndex: i + 1,
-                    key: i + 1,
-                  })),
-                },
-                {
-                  title: "Action",
-                  dataIndex: "Action",
-                  key: "action",
-                },
-              ]}
-              dataSource={[
-                {
-                  key: 1,
-                  courseName: "BS.c",
-
-                  action: "Edit",
-                },
-              ]}
-            />
-          </div>
+          <FormLayout
+            fieldsData={uploadCourseForm}
+            handleChange={uploadCourseHandleChange}
+            isButtonRequired={false}
+          />
         }
         okText={isApplicationType == "insert" ? "Submit" : "Update"}
         handleCancel={closeNewCourseAndSemesterModel}
-        handleOk={addNewQuestionHandleSubmit}
+        handleOk={addNewCourseAndSemesterHandleSubmit}
         okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
-        width="auto"
+        // width="auto"
       />
     </div>
   );

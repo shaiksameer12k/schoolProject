@@ -3,48 +3,39 @@ import WebcamComponent from "../../WebCam/WebCam";
 import ButtonComponent from "../../../reusable/Button/ButtonComponent";
 
 import CameraComponent from "../../WebCam/Camera";
-import DemoBar from "../../charts/DonuteChart";
+import DonuteChart from "../../charts/DonuteChart";
 import { Col, Row } from "antd";
 
 const Dashboard = () => {
-  let data02 = [
-    { type: "SSLC", value: 25 },
-    { type: "PUC", value: 27 },
-    { type: "Degree", value: 25 },
-  ];
-  let data01 = [
-    { type: "Submited", value: 25 },
-    { type: "Pending", value: 175 },
-  ];
-  // Calculate total value
-  const totalValue = data01.reduce((acc, item) => acc + item.value, 0);
+  let dashboardData = JSON.parse(localStorage.getItem("dashboard"));
+  let { CourseWise, OverAll } = dashboardData;
 
-  // Calculate percentage for each type
-  const dataWithPercentage = data01.map((item) => ({
-    ...item,
-    percentage: ((item.value / totalValue) * 100).toFixed(2), // Calculate percentage and round it to two decimal places
-  }));
-  console.log("dataWithPercentage", dataWithPercentage);
+  console.log("dashboardData", dashboardData);
+
   return (
     <div className=" h-full p-2">
       <Row gutter={[8, 8]}>
         <Col
-          sm={12}
+          xs={24}
+          sm={24}
           md={12}
           lg={6}
-          style={{ height: "200px" }}
-          className="shadow-lg gutter-item"
+          style={{
+            height: "200px", // Fixed height
+            display: "flex",
+            justifyContent: "center", // Center content horizontally
+            alignItems: "center", // Center content vertically
+          }}
         >
-          <DemoBar data={data01} type="Pie" />
+          <DonuteChart data={OverAll} />
         </Col>
-        <Col
-          sm={12}
-          md={12}
-          lg={6}
-          style={{ height: "200px" }}
-          className="shadow-lg gutter-item"
-        >
-          <DemoBar data={data02} type="Pie" />
+        <Col xs={24} sm={24} md={12} lg={6}  style={{
+            height: "200px", // Fixed height
+            display: "flex",
+            justifyContent: "center", // Center content horizontally
+            alignItems: "center", // Center content vertically
+          }}>
+          <DonuteChart data={CourseWise} />
         </Col>
       </Row>
     </div>
