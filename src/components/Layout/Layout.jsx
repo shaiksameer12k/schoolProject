@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 
 import { FloatButton, Button, Layout, Menu, theme, Drawer, Grid } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent.jsx";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import MenuDrawer from "../Main/MenuDrawer/MenuDrawer.jsx";
 import { menuData } from "../../data.js";
@@ -14,6 +14,7 @@ const Layout01 = ({ isAdimn }) => {
   const [scrollY, setScrollY] = useState(null);
   let Menulists = JSON.parse(localStorage.getItem("Menulists"));
   let location = useLocation();
+  let navigate = useNavigate();
   let { xs } = Grid.useBreakpoint();
 
   useEffect(() => {
@@ -88,8 +89,20 @@ const Layout01 = ({ isAdimn }) => {
         }}
       >
         <div className="demo-logo-vertical" />
+        <div className="h-[90%]">
+          <MenuDrawer menuList={Menulists} />
+        </div>
 
-        <MenuDrawer menuList={Menulists} />
+        <div
+          style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
+          className="ant-menu-item py-3"
+          onClick={() =>
+            navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
+          }
+        >
+          <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
+          <span className="ant-menu-title-content">Log Out</span>
+        </div>
       </Sider>
 
       {/* Main Layout */}
@@ -135,18 +148,18 @@ const Layout01 = ({ isAdimn }) => {
             padding: "15px 0px 0px 0px",
             background: "#2c1944",
           }}
-          // footer={
-          // <div
-          //   //   style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
-          //   //   className="ant-menu-item py-3"
-          //   //   onClick={() =>
-          //   //     navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
-          //   //   }
-          //   // >
-          //   //   <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
-          //   //   <span className="ant-menu-title-content">Log Out</span>
-          // </div>
-          // }
+          footer={
+            <div
+              style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
+              className="ant-menu-item py-3"
+              onClick={() =>
+                navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
+              }
+            >
+              <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
+              <span className="ant-menu-title-content">Log Out</span>
+            </div>
+          }
         >
           <MenuDrawer menuList={Menulists} />
         </Drawer>
