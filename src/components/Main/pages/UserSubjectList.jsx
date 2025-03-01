@@ -48,11 +48,11 @@ const UserSubjectList = () => {
   return (
     <div>
       <Row gutter={[8, 8]}>
-        <Col xs={24} sm={12} md={12} lg={12} className="border">
+        <Col xs={24} sm={12} md={12} lg={12} >
           <BarChart cardsData={cardsData} />
         </Col>
 
-        <Col xs={24} sm={12} md={12} lg={12} className="border">
+        <Col xs={24} sm={12} md={12} lg={12} >
           <Row gutter={[8, 8]}>
             {cardsData?.map((card) => (
               <Col xs={24} sm={12} md={12} lg={8}>

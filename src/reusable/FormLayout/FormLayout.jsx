@@ -9,7 +9,6 @@ const FormLayout = ({
   handleSubmit,
   removeSelectedFile,
   isButtonRequired = true,
-  
 }) => {
   const [form] = Form.useForm();
 
@@ -29,9 +28,12 @@ const FormLayout = ({
           {fieldsData?.map((field) => (
             <Col
               key={field.name}
-              xs={24}
-              sm={12}
-              md={8}
+              // xs={24}
+              // sm={12}
+              // md={8}
+              xs={field?.xs}
+              sm={field?.sm}
+              md={field?.md}
               lg={field?.columnSpace}
             >
               <InputField
@@ -64,7 +66,6 @@ const FormLayout = ({
             />
           </div>
         )}
-        
       </Form>
     </>
   );

@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import Header from "../Header/Header";
+import Header01 from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-import { FloatButton } from "antd";
+import { FloatButton, Button, Layout, Menu, theme, Drawer, Grid } from "antd";
 import DynamicIcon from "../../reusable/IconComponent/IconComponent.jsx";
 import { Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 import MenuDrawer from "../Main/MenuDrawer/MenuDrawer.jsx";
 import { menuData } from "../../data.js";
-
-const Layout = ({ isAdimn }) => {
+const { Header, Sider, Content } = Layout;
+const Layout01 = ({ isAdimn }) => {
   const [scrollY, setScrollY] = useState(null);
+  let Menulists = JSON.parse(localStorage.getItem("Menulists"));
   let location = useLocation();
+  let { xs } = Grid.useBreakpoint();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,21 +50,107 @@ const Layout = ({ isAdimn }) => {
     }
   }, [axios.defaults.headers.common["Authorization"]]);
 
+  const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // Track if the screen is mobile
+  const [drawerVisible, setDrawerVisible] = useState(false); // Control drawer visibility
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
   return (
-    <div className="w-full" ref={containerRef}>
-      <Header scrollY={scrollY} isAdimn={isAdimn} />
-      <div
-        className=" px-3 py-2 bg-customlightGrayBgColor"
+    // <div className="w-full" ref={containerRef}>
+    <Layout className="h-lvh">
+      {/* Sidebar for Desktop */}
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        breakpoint="lg" // Collapse sidebar on screens smaller than 992px
+        collapsedWidth={isMobile ? "0" : "80"} // Adjust collapsed width for mobile
+        onBreakpoint={(broken) => {
+          setIsMobile(broken); // Update isMobile state based on breakpoint
+          if (broken) {
+            setCollapsed(true); // Automatically collapse sidebar on small screens
+          } else {
+            setCollapsed(false); // Expand sidebar on larger screens
+          }
+        }}
         style={{
-          minHeight: "100vh",
-          height: "auto",
-          maxHeight: "auto",
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 2,
+          display: isMobile ? "none" : "block", // Hide sidebar on mobile
+          background: "#2c1944",
         }}
       >
-        <Outlet />
-      </div>
-      <Footer />
+        <div className="demo-logo-vertical" />
 
+        <MenuDrawer menuList={Menulists} />
+      </Sider>
+
+      {/* Main Layout */}
+      <Layout
+        style={{
+          marginLeft: isMobile ? 0 : collapsed ? 80 : 200, // Adjust margin for mobile
+          transition: "margin 0.2s", // Smooth transition for sidebar toggle
+        }}
+      >
+        <Header className="p-0">
+          <Header01
+            scrollY={scrollY}
+            isAdimn={isAdimn}
+            setCollapsed={setCollapsed}
+          />
+        </Header>
+
+        {/* Content */}
+        <Content
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: "100vh",
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          <Outlet />
+        </Content>
+        <Footer />
+      </Layout>
+
+      {isMobile && (
+        <Drawer
+          title="SunRise"
+          placement="left"
+          closable={collapsed}
+          onClose={() => setCollapsed(false)}
+          open={collapsed}
+          key={"left"}
+          style={{
+            width: xs ? "60%" : "0%",
+            padding: "15px 0px 0px 0px",
+            background: "#2c1944",
+          }}
+          // footer={
+          // <div
+          //   //   style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
+          //   //   className="ant-menu-item py-3"
+          //   //   onClick={() =>
+          //   //     navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
+          //   //   }
+          //   // >
+          //   //   <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
+          //   //   <span className="ant-menu-title-content">Log Out</span>
+          // </div>
+          // }
+        >
+          <MenuDrawer menuList={Menulists} />
+        </Drawer>
+      )}
       <FloatButton
         icon={<DynamicIcon iconName="FaArrowUp" color="#ffffff" size={20} />}
         style={{
@@ -76,7 +164,7 @@ const Layout = ({ isAdimn }) => {
         }}
         onClick={scrollToTop}
       />
-    </div>
+    </Layout>
   );
 };
-export default Layout;
+export default Layout01;

@@ -153,7 +153,7 @@ const LoginComponent = () => {
                 size="large"
               />
             </div>
-            <div>
+            {/* <div>
               <InputField
                 type="checkbox"
                 label="Remember Me"
@@ -167,13 +167,14 @@ const LoginComponent = () => {
                 style={{ padding: 0 }}
                 isMandatory={false}
               />
-            </div>
+            </div> */}
 
             {/* Login Button */}
             <div className="mb-4">
               <ButtonComponent
                 name="Login"
                 type="primary"
+                
                 onClick={handleSubmit}
                 size="large"
                 btnStyle={{ width: "100%" }}

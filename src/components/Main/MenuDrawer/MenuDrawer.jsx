@@ -1,90 +1,58 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Drawer, Grid, Menu, Radio, Space } from "antd";
-import { items } from "../../../data";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu } from "antd";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import DynamicIcon from "../../../reusable/IconComponent/IconComponent";
-const MenuDrawer = ({ drawerState = false, onClose, menuList, isAdimn }) => {
-  // hooks
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-  let { xs } = screens;
-  let loc = useLocation();
-  let navigate = useNavigate();
-  let pathName = loc?.pathname;
-  console.log("loc", loc);
+
+const MenuDrawer = ({ menuList }) => {
+  // Hooks
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pathName = location.pathname; // Current route path
+
+  // State
   const [selectedItem, setSelectedItem] = useState("1");
-  const [modifiedItems, setModifiedItems] = useState([]);
 
+  // Update selected item based on the current route
+  // useEffect(() => {
+  //   const activeItem = menuList?.find((item) =>
+  //     item.Menu_Path?.includes(pathName)
+  //   );
+  //   console.log("activeItem",activeItem)
+  //   if (activeItem) {
+  //     setSelectedItem(String(activeItem.Menu_id)); // Set the active item key
+  //   } else {
+  //     setSelectedItem("1"); // Reset if no matching route is found
+  //   }
+  // }, [, menuList])
+
+  // Map menuList to Ant Design Menu items
+  const modifiedItems = menuList?.map((item) => ({
+    key: item.Menu_id, // Unique key for each menu item
+    label: item.Menu_name,
+    icon: <DynamicIcon iconName={item?.Menu_Icon} size={18} />,
+  }));
+
+  // Handle menu item clicks
   const onClick = (e) => {
-    setSelectedItem(e.key);
-    onClose();
+    setSelectedItem(String(e.key)); // Update selected item on click
+    const clickedItem = menuList?.find((item) => item.Menu_id == e.key);
+    if (clickedItem) {
+      navigate(clickedItem.Menu_Path); // Navigate to the selected route
+    }
   };
-  console.log("selectedItem", selectedItem);
 
-  useEffect(() => {
-    let item = menuList.find((item) => item?.Menu_Path?.includes(pathName));
-    console.log("item", item);
-    if (item) setSelectedItem(item?.key);
-    else setSelectedItem("");
-  }, [loc]);
-
-  useEffect(() => {
-    const modifiedMenuData = menuList.map((item) => ({
-      key: item.Menu_id,
-      label: <Link to={item.Menu_Path}>{item.Menu_name}</Link>,
-      icon: (
-        <DynamicIcon
-          iconName={item.icon}
-          color={selectedItem == item.key ? "#000000" : "#ffffff"}
-          size={18}
-        />
-      ),
-    }));
-    setModifiedItems(modifiedMenuData);
-  }, [menuList]);
-
-  console.log("screens", modifiedItems, menuList, screens);
+  console.log("menuList", menuList);
 
   return (
-    <>
-      <Drawer
-        title="SunRise"
-        placement="left"
-        closable={drawerState}
-        onClose={onClose}
-        open={drawerState}
-        key={"left"}
-        style={{
-          width: xs ? "60%" : "20%",
-          padding: "15px 0px 0px 0px",
-          background: "#2c1944",
-        }}
-        footer={
-          <div
-            style={{ display: "flex", gap: 2, paddingLeft: "24px" }}
-            className="ant-menu-item py-3"
-            onClick={() =>
-              navigate(isAdimn ? "/AdminLoginPage" : "/StudentLoginPage")
-            }
-          >
-            <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
-            <span className="ant-menu-title-content">Log Out</span>
-          </div>
-        }
-      >
-        <Menu
-          onClick={onClick}
-          style={{
-            background: "#2c1944",
-            width: "100%",
-          }}
-          selectedKeys={[selectedItem]}
-          defaultOpenKeys={["sub1"]}
-          mode="inline"
-          items={modifiedItems}
-        />
-      </Drawer>
-    </>
+    <Menu
+      onClick={onClick}
+      selectedKeys={[selectedItem]} // Highlight the active item
+      defaultOpenKeys={["1"]}
+      mode="inline"
+      items={modifiedItems}
+      className="bg-transparent"
+    />
   );
 };
+
 export default MenuDrawer;

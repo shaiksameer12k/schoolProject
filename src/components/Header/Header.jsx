@@ -8,7 +8,7 @@ import DynamicIcon from "../../reusable/IconComponent/IconComponent";
 import UserMenu from "../../reusable/CustomMenu/CustomMenu";
 import { CurrentRoute } from "../../utils/constant";
 
-const Header = ({ scrollY, isAdimn }) => {
+const Header = ({ scrollY, isAdimn, setCollapsed }) => {
   // hooks
   let navegate = useNavigate();
   let loc = useLocation();
@@ -16,7 +16,7 @@ const Header = ({ scrollY, isAdimn }) => {
 
   let Menulists = JSON.parse(localStorage.getItem("Menulists"));
 
-  console.log("Menulists",Menulists)
+  console.log("Menulists", Menulists);
 
   const [openDrawer, setOpenDrawer] = useState(true);
   const showDrawer = () => {
@@ -32,18 +32,18 @@ const Header = ({ scrollY, isAdimn }) => {
     <header
       id="header"
       style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 3,
+        // position: "sticky",
+        // top: 0,
+        // zIndex: 3,
+
         width: "100%",
+        height: "100%",
         display: "flex",
         alignItems: "center",
         background: scrollY > 50 ? "#F5F3F6" : "#ffffff",
         boxShadow: scrollY > 50 ? "0px 3px 10px rgba(0,0,0,0.3)" : "none",
         transition: "all easy-in-out .5s",
         justifyContent: "space-between",
-        padding: "0px 20px",
-        height: "50px",
       }}
     >
       <Image src={logo} id="header_logo" />
@@ -94,16 +94,10 @@ const Header = ({ scrollY, isAdimn }) => {
         <DynamicIcon
           iconName="MdMenuOpen"
           size={30}
-          onClickHandel={showDrawer}
+          onClickHandel={() => setCollapsed((prev) => !prev)}
+          // onClickHandel={showDrawer}
         />
-        {/* </div> */}
-
-        <MenuDrawer
-          drawerState={openDrawer}
-          onClose={onClose}
-          menuList={Menulists}
-          isAdimn={isAdimn}
-        />
+        
       </nav>
     </header>
   );

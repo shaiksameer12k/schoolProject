@@ -30,7 +30,7 @@ const ButtonComponent = ({
         padding: "2px 10px",
         ...btnStyle,
       }}
-      htmlType="button"
+      htmlType="submit"
     >
       {name} {/* Button content (text or icon) */}
     </Button>

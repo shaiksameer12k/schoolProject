@@ -24,6 +24,7 @@ import {
   FaPowerOff,
   FaArrowRight,
   FaBiohazard,
+  FaFileUpload,
 } from "react-icons/fa";
 import {
   IoIosPeople,
@@ -72,6 +73,7 @@ import {
   MdTableRows,
   MdAddBox,
   MdPhoneInTalk,
+  MdDashboard,
 } from "react-icons/md";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CiCalendarDate } from "react-icons/ci";
@@ -117,11 +119,16 @@ import {
   RiTestTubeFill,
 } from "react-icons/ri";
 import { LuBaby } from "react-icons/lu";
-import { PiExportBold, PiExportFill, PiMathOperationsBold } from "react-icons/pi";
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import {
+  PiExportBold,
+  PiExportFill,
+  PiMathOperationsBold,
+} from "react-icons/pi";
+import { HiOutlineBuildingOffice2, HiQueueList } from "react-icons/hi2";
 
 import { FiPhone } from "react-icons/fi";
 import { CustomTooltip } from "../CustomToolTip/CustomToolTip";
+import { HiDocumentReport } from "react-icons/hi";
 
 const iconComponents = {
   IoHome,
@@ -236,8 +243,13 @@ const iconComponents = {
   FaRegBookmark,
   FaPowerOff,
   RiTestTubeFill,
-  FaArrowRight,PiMathOperationsBold,
-  FaBiohazard
+  FaArrowRight,
+  PiMathOperationsBold,
+  FaBiohazard,
+  MdDashboard,
+  HiQueueList,
+  FaFileUpload,
+  HiDocumentReport,
 };
 
 const DynamicIcon = ({

@@ -339,3 +339,13 @@ code {
   background-color: #888;
   border-radius: 10px;
 }
+
+.active {
+  font-weight: bold;
+  color: #1890ff; /* Ant Design primary color */
+  background-color: #e6f7ff; /* Light background for active item */
+}
+/* Hide label text when menu is collapsed */
+.ant-menu-inline-collapsed .ant-menu-item > span {
+  display: none;
+}

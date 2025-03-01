@@ -4,7 +4,7 @@ import Main from "./components/Main/Main";
 
 import { Route, Routes } from "react-router-dom";
 import LoginComponent from "./components/LoginPage/LoginComponent";
-import Layout from "./components/Layout/Layout";
+import Layout01 from "./components/Layout/Layout";
 import StudentRegisterForm from "./components/Main/pages/StudentRegisterForm";
 import Dashboard from "./components/Main/DashboardComponents/Dashboard";
 import Studentslist from "./components/Main/pages/Studentslist";
@@ -25,7 +25,7 @@ const Router = () => {
       <Route path="/AdminLoginPage" element={<LoginComponent />} />
       <Route path="/StudentLoginPage" element={<UserLoginComponent />} />
 
-      <Route path="/layout" element={<Layout isAdimn={true} />}>
+      <Route path="/Layout" element={<Layout01 isAdimn={true} />}>
         <Route index element={<Dashboard />} />
 
         <Route path="dashboard" element={<Dashboard />} />
@@ -39,7 +39,7 @@ const Router = () => {
         <Route path="reports" element={<Reports />} />
       </Route>
 
-      <Route path="/StudentLayout" element={<Layout isAdimn={false} />}>
+      <Route path="/StudentLayout" element={<Layout01 isAdimn={false} />}>
         <Route index element={<UserSubjectList />} />
         <Route path="studentDashboard" element={<UserSubjectList />} />
         <Route

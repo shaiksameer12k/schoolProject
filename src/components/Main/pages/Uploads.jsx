@@ -802,7 +802,7 @@ const Uploads = () => {
 
   return (
     <div>
-      <div className="flex gap-2 items-center px-2  p-0">
+      {/* <div className="flex gap-2 items-center px-2  p-0">
         <div className="flex-1">
           {
             <FormLayout
@@ -836,7 +836,52 @@ const Uploads = () => {
             onClick={() => openAddNewQuestion("insert")}
           />
         </div>{" "}
-      </div>
+      </div> */}
+
+      <Row align="middle" gutter={[16, 0]} style={{ padding: "0 8px" }}>
+        {/* Left side - FormLayout */}
+        <Col flex="auto">
+          <FormLayout
+            fieldsData={fields}
+            handleChange={handleChange}
+            isButtonRequired={false}
+          />
+        </Col>
+
+        {/* Right side - Buttons */}
+        <Col>
+          <Row gutter={[16, 16]} className="border">
+            <Col xs={24} md={8}>
+              <ButtonComponent
+                name="Fetch Questions"
+                size="middle"
+                btnStyle={{ width: "100%" }}
+                icon="FaCloudUploadAlt"
+                onClick={fetchQuestions}
+                loading={loadingStates?.fetchQuestions}
+              />
+            </Col>
+            <Col xs={12} md={8}>
+              <ButtonComponent
+                name="Add Course"
+                size="middle"
+                btnStyle={{ width: "100%" }}
+                icon="IoMdAdd"
+                onClick={() => openNewCourseAndSemesterModel("insert")}
+              />
+            </Col>
+            <Col xs={12} md={8}>
+              <ButtonComponent
+                name="Add New Que"
+                size="middle"
+                btnStyle={{ width: "100%" }}
+                icon="IoMdAdd"
+                onClick={() => openAddNewQuestion("insert")}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
       <Row gutter={[8, 8]}>
         {cardsData?.map((card) => (
@@ -883,12 +928,13 @@ const Uploads = () => {
                     onChange={(e) => setSelectedBulkId(e.target.value)}
                   />
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={8}>
+                <Col xs={24} sm={24} md={24} lg={8} className="flex justify-end">
                   <ButtonComponent
                     name="Fetch Excel Template"
                     onClick={fetchExcelTemplate}
                     loading={loadingStates?.fetchExcelTemplate}
                     disabled={selectedBulkId > 0 ? false : true}
+                    
                   />
                 </Col>
               </Row>
