@@ -101,7 +101,9 @@ const Layout01 = ({ isAdimn }) => {
           }
         >
           <DynamicIcon color="#ffffff" iconName="FaPowerOff" size={18} />
-          <span className="ant-menu-title-content">Log Out</span>
+          {!collapsed && (
+            <span className="ant-menu-title-content">Log Out</span>
+          )}
         </div>
       </Sider>
 

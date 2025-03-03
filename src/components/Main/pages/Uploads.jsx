@@ -11,6 +11,7 @@ import {
   adminOMRQuestionsAndAnswersUploadForm,
   adminQuestionsUploadForm,
   uploadCourseFormData,
+  uploadSubjectFormData,
 } from "../../../data/formData";
 import FormLayout from "../../../reusable/FormLayout/FormLayout";
 import { useApiCalls } from "../../../api/apiCalls";
@@ -131,6 +132,11 @@ const Uploads = () => {
     adminOMRQuestionsAndAnswersUploadForm
   );
   const [isApplicationType, setIsApplicationType] = useState("insert");
+
+  const [isOpenAddNewCourseAndSemester, setIsOpenAddNewCourseAndSemester] =
+  useState(false);
+const [isOpenAddNewSubject, setIsOpenAddNewSubject] = useState(false);
+
 
   const onClickHandel = (cardId, cardsData) => {
     setSelectedData(cardId);
@@ -420,6 +426,9 @@ const Uploads = () => {
       let updateArr01 = adminQuestionsUploadForm.map((item) =>
         item?.name === "Course" ? { ...item, options: courseOptions } : item
       );
+      let updateArr02 = uploadSubjectFormData.map((item) =>
+        item?.name === "Course" ? { ...item, options: courseOptions } : item
+      );
 
       let correctAnswerOptions = adminOMRQuestionsAndAnswersUploadForm
         .filter((item) => item.label.includes("Option"))
@@ -428,7 +437,7 @@ const Uploads = () => {
           value: data.label,
         }));
 
-      let updateArr02 = adminOMRQuestionsAndAnswersUploadForm.map((item) =>
+      let updateArr03 = adminOMRQuestionsAndAnswersUploadForm.map((item) =>
         item?.name === "Course"
           ? { ...item, options: courseOptions }
           : item?.name === "CorrectOption"
@@ -437,10 +446,11 @@ const Uploads = () => {
       );
 
       setFields(updateArr01);
-      setAddNewFormFieldsData(updateArr02);
+      setUploadSubjectForm(updateArr02);
+      setAddNewFormFieldsData(updateArr03);
     };
     fetchData();
-  }, []);
+  }, [isOpenAddNewSubject]);
 
   console.log("questionsList", questionsList);
 
@@ -567,14 +577,20 @@ const Uploads = () => {
   };
 
   // add course and sem
-  const [isOpenAddNewCourseAndSemester, setIsOpenAddNewCourseAndSemester] =
-    useState(false);
+
 
   const openNewCourseAndSemesterModel = () => {
     setIsOpenAddNewCourseAndSemester(true);
   };
   const closeNewCourseAndSemesterModel = () => {
     setIsOpenAddNewCourseAndSemester(false);
+  };
+
+  const openNewSubjectModel = () => {
+    setIsOpenAddNewSubject(true);
+  };
+  const closeNewSubjectModel = () => {
+    setIsOpenAddNewSubject(false);
   };
 
   // fetch getimportlist
@@ -798,46 +814,116 @@ const Uploads = () => {
     setUploadCourseForm(uploadCourseFormData);
   }, [isOpenAddNewCourseAndSemester]);
 
-  console.log("selectedBulkId", selectedBulkId);
+  // addNewSubject
+  const [uploadSubjectForm, setUploadSubjectForm] = useState([]);
+
+  const addNewSubjectHandleSubmit = async () => {
+    loadingStates.addNewSubjectHandleSubmit = true;
+
+    let paramsData = uploadSubjectForm.reduce((acc, curr) => {
+      acc[curr.name] = curr.value;
+      return acc;
+    }, {});
+
+    try {
+      let params = JSON.stringify([
+        {
+          SubjectName: paramsData?.subjectName,
+          Semid: paramsData?.Semester,
+          coursename: paramsData?.Course,
+          Transaction: "insert",
+          TransactionId: 0,
+        },
+      ]);
+      let result = await ApiCalls(
+        "addNewSubjectHandleSubmit",
+        "post",
+        `Admin/AddOrupdateSubjects`,
+        params
+      );
+
+      console.log("addNewSubjectHandleSubmit", result);
+      setIsOpenAddNewSubject(false)
+    } catch (error) {
+      console.log(`addNewSubjectHandleSubmit ${error}`);
+    } finally {
+      loadingStates.addNewSubjectHandleSubmit = false;
+    }
+  };
+
+  const uploadSubjectHandleChange = async (
+    e,
+    fieldsArray,
+    regexType,
+    maxLength,
+    field
+  ) => {
+    const { name, value, type, checked } = e.target;
+
+    // Centrlise Fields Validation
+    let updatedFields = fieldsArray;
+
+    if (field?.isDependentOnOtherColumn) {
+      let data = [];
+      if (field?.DependentColumnName == "Semester") {
+        data = await getSemesterData(value);
+      } else if (field?.DependentColumnName == "Subject") {
+        let Courseid = fieldsArray.find(
+          (item) => item?.name == "Course"
+        )?.value;
+        data = await getSubjectData(Courseid, value);
+      }
+
+      let options = data?.map((data) => ({
+        label:
+          field?.DependentColumnName == "Semester"
+            ? data?.Semesters
+            : field?.DependentColumnName == "Subject"
+            ? data?.SubjectName
+            : data[field?.DependentColumnName],
+        value:
+          field?.DependentColumnName == "Semester"
+            ? String(data?.Semid)
+            : field?.DependentColumnName == "Subject"
+            ? String(data?.subId)
+            : data[field?.DependentColumnName],
+      }));
+
+      console.log("options", options);
+
+      updatedFields = updatedFields.map((item) =>
+        item.name == field?.DependentColumnName
+          ? {
+              ...item,
+              options: options,
+            }
+          : item
+      );
+
+      console.log("updatedFields*", updatedFields);
+    }
+
+    updatedFields = centrliseFieldsValidation(
+      type,
+      name,
+      value,
+      checked,
+      updatedFields,
+      regexType,
+      maxLength
+    );
+
+    setUploadSubjectForm(updatedFields);
+    // form.setFieldsValue({ [name]: value });
+    return;
+  };
+
+  useEffect(() => {
+    setUploadSubjectForm(uploadSubjectFormData);
+  }, [isOpenAddNewSubject]);
 
   return (
     <div>
-      {/* <div className="flex gap-2 items-center px-2  p-0">
-        <div className="flex-1">
-          {
-            <FormLayout
-              fieldsData={fields}
-              handleChange={handleChange}
-              isButtonRequired={false}
-            />
-          }
-        </div>
-        <div className="flex gap-2">
-          <ButtonComponent
-            name="Fetch Questions"
-            size="middle"
-            btnStyle={{ width: "auto" }}
-            icon="FaCloudUploadAlt"
-            onClick={fetchQuestions}
-            loading={loadingStates?.fetchQuestions}
-          />
-          <ButtonComponent
-            name="Add Course / Semester"
-            size="middle"
-            btnStyle={{ width: "auto" }}
-            icon="IoMdAdd"
-            onClick={() => openNewCourseAndSemesterModel("insert")}
-          />
-          <ButtonComponent
-            name="Add New Questions"
-            size="middle"
-            btnStyle={{ width: "auto" }}
-            icon="IoMdAdd"
-            onClick={() => openAddNewQuestion("insert")}
-          />
-        </div>{" "}
-      </div> */}
-
       <Row align="middle" gutter={[16, 0]} style={{ padding: "0 8px" }}>
         {/* Left side - FormLayout */}
         <Col flex="auto">
@@ -850,8 +936,8 @@ const Uploads = () => {
 
         {/* Right side - Buttons */}
         <Col>
-          <Row gutter={[16, 16]} className="border">
-            <Col xs={24} md={8}>
+          <Row gutter={[16, 16]} >
+            <Col xs={24} md={6}>
               <ButtonComponent
                 name="Fetch Questions"
                 size="middle"
@@ -861,7 +947,7 @@ const Uploads = () => {
                 loading={loadingStates?.fetchQuestions}
               />
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={6}>
               <ButtonComponent
                 name="Add Course"
                 size="middle"
@@ -870,7 +956,16 @@ const Uploads = () => {
                 onClick={() => openNewCourseAndSemesterModel("insert")}
               />
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={6}>
+              <ButtonComponent
+                name="Add Subject"
+                size="middle"
+                btnStyle={{ width: "100%" }}
+                icon="IoMdAdd"
+                onClick={() => openNewSubjectModel("insert")}
+              />
+            </Col>
+            <Col xs={12} md={6}>
               <ButtonComponent
                 name="Add New Que"
                 size="middle"
@@ -928,13 +1023,18 @@ const Uploads = () => {
                     onChange={(e) => setSelectedBulkId(e.target.value)}
                   />
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={8} className="flex justify-end">
+                <Col
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={8}
+                  className="flex justify-end"
+                >
                   <ButtonComponent
                     name="Fetch Excel Template"
                     onClick={fetchExcelTemplate}
                     loading={loadingStates?.fetchExcelTemplate}
                     disabled={selectedBulkId > 0 ? false : true}
-                    
                   />
                 </Col>
               </Row>
@@ -1010,6 +1110,22 @@ const Uploads = () => {
         okText={isApplicationType == "insert" ? "Submit" : "Update"}
         handleCancel={closeNewCourseAndSemesterModel}
         handleOk={addNewCourseAndSemesterHandleSubmit}
+        okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
+        // width="auto"
+      />
+      <ModalComponent
+        title={"Add Subject"}
+        isModalOpen={isOpenAddNewSubject}
+        content={
+          <FormLayout
+            fieldsData={uploadSubjectForm}
+            handleChange={uploadSubjectHandleChange}
+            isButtonRequired={false}
+          />
+        }
+        okText={isApplicationType == "insert" ? "Submit" : "Update"}
+        handleCancel={closeNewSubjectModel}
+        handleOk={addNewSubjectHandleSubmit}
         okButtonProps={{ style: { backgroundColor: "#FF8383" } }}
         // width="auto"
       />
